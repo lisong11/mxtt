@@ -1,0 +1,99 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+        <!--END NAVBAR-->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <div id="content-container">
+                <!--Page content-->
+                <div id="page-content">
+					<div class="row">
+					<div class="panel">
+                        {include file="layout/bread"}
+					    <!--Data Table-->
+					    <div class="panel-body">
+					        <div class="pad-btm form-inline">
+					            <div class="row">
+                                                        <div class="col-sm-6 table-toolbar-left">
+                                                        </div>
+					                <div class="col-sm-6 table-toolbar-right">
+					                    <a class="btn btn-purple" href="/node/add?parentId={$parentId}"><i class="demo-pli-add"></i> 新增</a>
+					                    
+					                </div>
+					            </div>
+					        </div>
+					        <div class="table-responsive">
+                                <table class="table table-bordered table-hover toggle-circle form-horizontal" data-page-size="7">
+                                    <thead>
+                                    <tr>
+                                        <!-- <th width="20"></th> -->
+                                        <th>ID</th>
+                                        <th>节点名称</th>
+                                        <th>图标</th>
+                                        <th>URL地址</th>
+                                        <th>节点类型</th>
+                                        <th>节点状态</th>
+                                        <th>创建时间</th>
+                                        <th>最后修改时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="list.data" id="vo"}
+                                    <tr>
+                                        <!-- <td>
+                                            <input id="list-{$key}" class="magic-checkbox" type="checkbox" value="{$item.id}" >
+                                            <label for="list-{$key}"></label>
+                                        </td> -->
+                                       <td>{$vo.id}</td>
+                                        <td>{$vo.node_name}</td>
+                                        <td><i class="fa fa-fw {$vo.node_icon}"></i></td>
+                                        <td>{$vo.node_value}</td>
+                                        <td>
+                                            <strong class="blue">{$vo.node_deep} </strong>
+                                        </td>
+                                        <td><font color=green>
+                                            <i class='fa fa-1x {$vo.status == 1 ? "fa-check-circle-o" : "fa-dot-circle-o"} '></i>
+                                        </font></td>
+                                        <td>{$vo.create_tm}</td>
+                                        <td>{$vo.update_tm}</td>
+                                        <td>
+                                            <a href="/node/Nodelist?parentId={$vo.id}" class="btn btn-xs btn-primary">查看子节点</a>
+                                            {if in_array("/role/editpermission",$adminAllowNodeList)}
+                                            <a href="/node/edit?nodeId={$vo.id}" class="btn btn-xs btn-dark">编辑</a>
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                    {if empty($list['data'])}
+                                    <tr>
+                                        <td colspan="9" style="text-align:center !important;">暂无数据</td>
+                                    </tr>
+                                    {/if}
+                                    </tbody>
+                                </table>
+                                <div class="text-right">
+                                    {$page}
+                                </div>
+                            </div>
+					        </div>
+					    </div>
+					    <!--End Data Table-->
+					</div>
+                </div>
+                <!--End page content-->
+            </div>
+            <!--END CONTENT CONTAINER-->
+            <!--ASIDE-->
+            <!--END ASIDE-->
+            <!--MAIN NAVIGATION-->
+            {include file="layout/menu"}
+            <!--END MAIN NAVIGATION-->
+        </div>
+        <!-- FOOTER -->
+        {include file="layout/footer"}
+        <!-- END FOOTER -->
+    </div>
+    <!-- END OF CONTAINER -->
+</body>
+</html>
+

@@ -1,0 +1,118 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<!--END NAVBAR-->
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="panel">
+                    {include file="layout/bread"}
+                    <!--Data Table-->
+                    <div class="panel-body">
+                        <div class="pad-btm form-inline">
+                            <div class="row">
+
+                                <div class="col-sm-12 table-toolbar-left">
+                                    <form class="form-inline" action="" method="get">
+                                        
+                                        <div class="form-group">
+                                            <label for="">管理员名称</label>
+                                            <input type="text" placeholder="输入管理员名称搜索"
+                                                   class="form-control" autocomplete="off" name="name" value="{$name}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">日志类型</label>
+                                            <select name="type"  class="form-control">
+                                                <option value="-1">请选择状态</option>
+                                                <option value="1" {if $type == 1}selected{/if}>登录</option>
+                                                <option value="2" {if $type == 2}selected{/if}>退出</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">时间范围</label>
+                                            <input type="text" class="form-control" id="start" name="start_time" value="{$start_time}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">---</label>
+                                            <input type="text" class="form-control" id="end" name="end_time" value="{$end_time}">
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover toggle-circle form-horizontal"
+                                   data-page-size="7">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>管理员名称</th>
+                                    <th>日志类型</th>
+                                    <th>时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="list.data" id="vo"}
+                                <tr>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.user_name}</td>
+                                    <td>{if $vo.type == 1}登录{else/}退出{/if}</td>
+                                    <td>{$vo.log_time}</td>
+                                </tr>
+                                {/volist}
+                                {if empty($list['data'])}
+                                <tr>
+                                    <td colspan="6" style="text-align:center !important;">暂无数据</td>
+                                </tr>
+                                {/if}
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                {$page}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Data Table-->
+            </div>
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+</div>
+<!-- END OF CONTAINER -->
+
+</body>
+<link rel="stylesheet" type="text/css" href="/static/admin/plugins/bootstrap-fileinput/css/fileinput.min.css">
+<script src="/static/admin/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#start' //指定元素
+            ,type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#end' //指定元素
+            ,type: 'datetime'
+        });
+    })
+</script>
+</html>
+

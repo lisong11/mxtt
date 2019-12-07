@@ -1,0 +1,206 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<style type="text/css">
+    .img {
+        width: 40 px;
+        height: 40px;
+        border-radius: 20px;
+    }
+    .checkbox, .radio{
+        margin-left: 6px !important;
+        margin-top: 0px !important;
+    }
+    .layui-form-label{
+        width:100px !important;
+    }
+    .layui-form-item{
+        margin-top:10px !important;
+    }
+</style>
+<div class="boxed">
+    <div id="content-container">
+        <div id="page-content">
+            <div class="row">
+                <div class="panel">
+                    {include file="layout/bread"}
+                    <div class="panel-body">
+                        <div class="pad-btm form-inline">
+                            <div class="row">
+
+                                <div class="col-sm-12 table-toolbar-left">
+                                    <form class="form-inline" action="" method="get">
+
+                                        <div class="form-group">
+                                            <select name="searchField" class="form-control">
+                                                <option value="realname" {if condition="$searchField eq 'realname'"}selected{/if}>姓名</option>
+                                                <option value="phone" {if condition="$searchField eq 'phone'"}selected{/if}>电话</option>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input id="demo-input-search2" type="text" placeholder="输入关键词搜索"
+                                                   class="form-control" autocomplete="off" name="searchValue"
+                                                   value="{$searchValue}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">状态</label>
+                                            <select name="status"  class="form-control">
+                                                <option value="-1">全部</option>
+                                                <option value="0" {if $status == 0}selected{/if}>禁用</option>
+                                                <option value="1" {if $status == 1}selected{/if}>启用</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">时间</label>
+                                            <input type="text" class="form-control" id="start" name="start_time"
+                                                   value="{$start_time}" style="width:95px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">---</label>
+                                            <input type="text" class="form-control" id="end" name="end_time"
+                                                   value="{$end_time}" style="width:95px">
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover toggle-circle form-horizontal"
+                                   data-page-size="7">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>头像</th>
+                                    <th>昵称</th>
+                                    <th>名字</th>
+                                    <th>电话</th>
+                                    <th>余额</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="list.data" id="vo"}
+                                <tr>
+                                    <td>{$vo.user_id}</td>
+                                    <td><img src="{$vo.headimgurl}" class="img"></td>
+                                    <td>{$vo.nickname}</td>
+                                    <td>{$vo.realname}</td>
+                                    <td>{$vo.phone}</td>
+                                    <td>{$vo.balance/100}</td>
+                                    <td>
+                                        <div class="btn-group" style="width:170px">
+                                            <a href="{:url('user/edit','&id='.$vo.user_id)}" class="btn btn-xs btn-bg1"
+                                               style="margin:auto 3px;">编辑</a>
+                                            <a href="{:url('user/userDetail','&id='.$vo.user_id)}"
+                                               class="btn btn-xs btn-bg2" style="margin:auto 3px;">查看</a>
+                                            <a onclick="del2({$vo.user_id})" class="btn btn-xs btn-red"
+                                               style="margin:auto 3px;">删除</a>
+                                            <a onclick="sendmessage({$vo.user_id})" class="btn btn-xs btn-bg5"
+                                               style="margin:auto 3px;">消息</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                {if empty($list['data'])}
+                                <tr>
+                                    <td colspan="7" style="text-align:center !important;">暂无数据</td>
+                                </tr>
+                                {/if}
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                {$page}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="layout/menu"}
+</div>
+{include file="layout/footer"}
+
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#start' //指定元素
+            , type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#end' //指定元素
+            , type: 'datetime'
+        });
+    })
+    function sendmessage(id) {
+        layer.open({
+            type: 1
+            ,
+            title: false //不显示标题栏
+            ,
+            closeBtn: false
+            ,
+            area: ['400px', '300px']
+            ,
+            shade: 0.8
+            ,
+            id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            ,
+            btn: ['发送', '取消'],
+            yes: function () {
+
+                layui.use('laydate', function () {
+                    var laydate = layui.laydate;
+
+                    laydate.render({
+                        elem: '#push_time' //指定元素
+                        , type: 'datetime'
+                    });
+
+
+                })
+                var push_time = document.forms.item(1).push_time.value;
+                var message_content = document.forms.item(1).message_content.value;
+                var status = document.forms.item(1).status.value;
+                $.ajax({
+                    url: 'addMes',
+                    type: 'post',
+                    data: {user_id: id, push_time: push_time, message_content: message_content, wxstatus: status},
+                    dataType: 'json',
+                    success: function (returnData) {
+                        if (returnData.code == 0) {
+                            window.location.reload();
+                        } else {
+                            layer.msg(returnData.msg);
+                        }
+                    }
+                });
+                return;
+
+            }
+            ,
+            btnAlign: 'c'
+            ,
+            moveType: 1 //拖拽模式，0或者1
+            ,
+            content: '<form class="layui-form" action="" id="test_form"><div class="layui-form-item"><label class="layui-form-label">消息</label><div class="layui-input-block"><textarea placeholder="请输入消息" style="width: 70%;" name="message_content" class="layui-textarea" lay-verify="remark"></textarea></div></div><div class="layui-form-item"><label class="layui-form-label">发布时间</label><div class="layui-input-block"><input type="date" name="push_time" class="layui-input" style="width:50%"></div></div><div class="form-group"><label class="col-md-3 control-label">发送微信消息</label><div class="col-md-5"><div class="radio"><input id="radio-1" class="magic-radio" type="radio" name="status" value="1" checked {/if}><label for="radio-1">是</label><input id="radio-2" class="magic-radio" type="radio" name="status" value="0" }checked {/if}><label for="radio-2">否</label></div></div></div></form>'
+            ,
+            success: function (layero) {
+            }
+        });
+    }
+</script>
+</html>
+

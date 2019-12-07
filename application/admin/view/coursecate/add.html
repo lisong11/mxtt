@@ -1,0 +1,86 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<!--END NAVBAR-->
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--End breadcrumb-->
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <!-- BASIC FORM ELEMENTS -->
+                        <style type="text/css">
+                            .layui-form-label{width: 200px;}
+                            .layui-form-select{margin-left: 202px;width: 45%;}
+                            .layui-form-select .layui-input{width: 100% !important;margin-left: -3px;}
+                            .layui-input{width: 50% !important;}
+                            .date-input{width: 20% !important;}
+                            .layui-layedit {width: 70%;margin-left: 90px;}
+                            .sub-button{margin-left: 300px;}
+                        </style>
+                        <form method="post" action="addDo" id="add_form" class="layui-form">
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">主题标题：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" placeholder="请输入主题标题" autocomplete="off" class="layui-input" lay-verify="title">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block sub-button">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+<!-- SCROLL PAGE BUTTON -->
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+<!-- END OF CONTAINER -->
+</body>
+</html>
+<script src="/static/admin/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+
+
+    layui.use(['form','laydate','upload','layedit'], function(){
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var layedit = layui.layedit;
+
+
+        form.verify({
+            title: function(value, item){
+                if(value == ''){
+                    return '分类名称不能为空';
+                }
+            }
+        });
+
+    });
+
+</script>

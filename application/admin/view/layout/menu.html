@@ -1,0 +1,50 @@
+<!--MAIN NAVIGATION-->
+<!--===================================================-->
+<nav id="mainnav-container">
+    <div id="mainnav">
+        <!--Menu-->
+        <!--================================-->
+        <div id="mainnav-menu-wrap">
+            <div class="nano">
+                <div class="nano-content">
+
+             
+                    <!--End shortcut buttons-->
+                    <ul id="mainnav-menu" class="list-group">
+                        <!--Category name-->
+                        <!-- <li class="list-header">基本配置</li> -->
+                        <!--Menu list item-->
+                        {if !empty($adminMenu)}
+                        {volist name="adminMenu" id="menu"}                 
+                        {if condition="$menu['is_allow'] eq 1"}
+                        
+                        <li {if $nowTopNode.node_value == $menu.node_value}class="active"{/if}>
+                            <a href="#">
+                                <i class="fa fa-fw {$menu.node_icon}"></i>
+                                <span class="menu-title">{$menu.node_name}</span>
+                                <i class="arrow"></i>
+                            </a>
+                            <!--Submenu-->
+                            <ul class="collapse">
+                                {if isset($menu['son'])}
+                                {volist name="menu.son" id="menuSon"}
+                                {if condition="$menuSon['is_allow'] eq 1"}
+                                <li {if $nowBaseUrl == strtolower($menuSon.node_value)}class="active-link"{/if}><a href="{$menuSon.node_value}"><i class="{$menuSon.node_icon}"></i>{$menuSon.node_name}</a></li>
+                                {/if}
+                                {/volist}
+                                {/if}
+                            </ul>
+                        </li>
+                        {/if}
+                        {/volist}
+                        
+                        {/if}
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        <!--End menu-->
+    </div>
+</nav>
+<!--END MAIN NAVIGATION-->

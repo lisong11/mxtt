@@ -1,0 +1,154 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+        <!--END NAVBAR-->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <div id="content-container">
+                <!--End breadcrumb-->
+                <!--Page content-->
+                <div id="page-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel">
+                                {include file="layout/bread"}
+					            <!-- BASIC FORM ELEMENTS -->
+				<form method="post" action="editDo" id="edit_form" class="Validform">
+                                    <input type="hidden" name="id" value="{$info.id}">
+                                    <input type="hidden" name="parentId" value="{$info.parent_node_id}">
+                                    <div class="panel-body form-horizontal form-padding">
+                
+                                        <!--text-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">节点名称：</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" placeholder="" name="node_name" value="{$info.node_name}" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">节点URL：</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" placeholder="" name="node_value" value="{$info.node_value}" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">节点图标：</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" placeholder="" name="node_icon" value="{$info.node_icon}" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">排序：</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" placeholder="排序数字，大的排在前面" name="order_by" value="{$info.order_by}" >
+                                            </div>
+                                        </div>
+
+                                        <!--Radio-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">节点类型：</label>
+                                            <div class="col-md-5">
+                                                <div class="radio">
+                                                    {volist name="nodeDeep" id="d"}
+                                                    <input id="radio-{$key}" class="magic-radio" type="radio" name="node_deep" value="{$key}" {if condition="$info['node_deep'] eq $key"}checked {/if}><label for="radio-{$key}">{$d}</label>
+                                                    {/volist}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!--select-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">选择父节点：</label>
+                                            <select class="form-control" name="parent_node_id" style="width:40%;">
+                                                <option value="0">选择父节点</option>
+                                            </select>
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">是否显示：</label>
+                                            <div class="col-md-5">
+                                                <div class="radio">
+
+                                                    <input id="radio-33" class="magic-radio" type="radio" name="is_display" value="1" {if condition="$info['is_display'] eq 1"}checked {/if}><label for="radio-33">显示</label>
+                                                    <input id="radio-44" class="magic-radio" type="radio" name="is_display" value="0" {if condition="$info['is_display'] eq 0"}checked {/if}><label for="radio-44">不显示</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">是否有效：</label>
+                                            <div class="col-md-5">
+                                                <div class="radio">
+
+                                                    <input id="radio-11" class="magic-radio" type="radio" name="status" value="1" {if condition="$info['status'] eq 1"}checked {/if}><label for="radio-11">有效</label>
+                                                    <input id="radio-22" class="magic-radio" type="radio" name="status" value="0" {if condition="$info['status'] eq 0"}checked {/if}><label for="radio-22">无效</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+					            <!-- END BASIC FORM ELEMENTS -->
+                                <div class="panel-footer text-right">
+                                    <a class="btn  btn-default" href="javascript:window.history.go(-1);" >取消</a>
+                                    <span style="display: inline-block;width: 20px;"></span>
+                                    <button class="btn btn-success" type="button" onclick="submit_prev('edit_form')">提交</button>
+                                </div>
+                                </form>
+					        </div>
+					    </div>
+					</div>
+
+                </div>
+                <!--End page content-->
+            </div>
+            <!--END CONTENT CONTAINER-->
+            <!--ASIDE-->
+            <!--END ASIDE-->
+            <!--MAIN NAVIGATION-->
+            {include file="layout/menu"}
+            <!--END MAIN NAVIGATION-->
+        </div>
+        <!-- FOOTER -->
+        {include file="layout/footer"}
+        <!-- END FOOTER -->
+        <!-- SCROLL PAGE BUTTON -->
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+    </div>
+    <!-- END OF CONTAINER -->
+<script type="text/javascript">
+    $(function () {
+        $("input[name='node_deep']").change(nodeChange);
+        nodeChange();
+        function nodeChange() {
+            var nodeDeep = $("input[name='node_deep']:checked").val();
+            var nodeParentId = {$info.parent_node_id};
+            $.ajax({
+                url: "/node/ajaxGetParentNodeInfo",
+                type: "post",
+                dataType: "json",
+                data: {nodeDeep: nodeDeep},
+                success: function (res) {
+                    if (res.code != "0")
+                    {
+                        layer.msg(res.msg);
+                    } else {
+                        html = "<option value=''>选择父节点</option>";
+                        obj = res.data;
+                        for (i in obj)
+                        {
+                            html += "<option value='" + obj[i].id + "' " + (obj[i].id == nodeParentId ? "selected" : "") + ">";
+                            html += obj[i].node_name + "  【" + obj[i].node_value + "】 </option>";
+                        }
+                        $("select[name='parent_node_id']").html(html);
+                    }
+                }
+            });
+        }
+    })
+</script>
+</body>
+</html>

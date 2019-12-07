@@ -1,0 +1,163 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<link rel="stylesheet" href="/static/admin/plugins/select2/css/select2.min.css">
+        <!--END NAVBAR-->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <div id="content-container">
+                <!--Page content-->
+                <div id="page-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel">
+                                {include file="layout/bread"}
+                                <!-- BASIC FORM ELEMENTS -->
+                                <form method="post" action="addDo" id="add_form" class="Validform" >
+                                    <div class="panel-body form-horizontal form-padding">
+                
+                                        <!--text-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label"><span style="color:red;">*</span>用户名</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" placeholder="请填写用户名" name="user_name" value="" datatype="*"  >
+                                            </div>
+                                        </div>
+
+                                        
+                                        <!--text-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label"><span style="color:red;">*</span>真实姓名</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" placeholder="请填写真实姓名" name="real_name" value=""  >
+                                            </div>
+                                        </div>
+
+                                        <!--text-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">密码</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" name="password"  placeholder="用户密码" >
+                                            </div>
+                                        </div>
+
+                                        
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">性别：</label>-->
+                                            <!--<div class="col-md-5">-->
+                                                <!--<div class="radio">-->
+                                                    <!--<input id="radio-44" class="magic-radio" type="radio" name="sex" value="0" checked><label for="radio-44">男</label>-->
+                                                    <!--<input id="radio-33" class="magic-radio" type="radio" name="sex" value="1" ><label for="radio-33">女</label>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!---->
+                                         <!--&lt;!&ndash;text&ndash;&gt;-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">手机号：</label>-->
+                                            <!--<div class="col-md-5">-->
+                                                <!--<input type="text" class="form-control" placeholder="请填写手机号" name="phone" value=""  >-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                         <!---->
+                                         <!--&lt;!&ndash;text&ndash;&gt;-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">邮箱：</label>-->
+                                            <!--<div class="col-md-5">-->
+                                                <!--<input type="text" class="form-control" placeholder="请填写邮箱" name="email" value=""  >-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                          <!--&lt;!&ndash;text&ndash;&gt;-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">QQ：</label>-->
+                                            <!--<div class="col-md-5">-->
+                                                <!--<input type="text" class="form-control" placeholder="请填写qq" name="qq" value=""  >-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                          <!---->
+                                           <!--&lt;!&ndash;text&ndash;&gt;-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">微信：</label>-->
+                                            <!--<div class="col-md-5">-->
+                                                <!--<input type="text" class="form-control" placeholder="请填写微信" name="wx" value=""  >-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+
+                                        <!--select-->
+                                        <div class="form-group"  >
+                                            <label class="col-md-3 control-label"><span style="color:red;">*</span>角色</label>
+                                            <div class="col-md-5">
+                                                <select class="selectpicker" name="role_id" id="hideselect">
+                                                    <option value="1" selected>请选择角色</option>
+                                                    {volist name="roleList" id="role"}
+                                                    <option value="{$role.id}">{$role.role_name}</option>
+                                                    {/volist}
+                                                </select>
+                                            </div> 
+                                        </div>   
+                                    </div>
+                                                                <div class="panel-footer text-right">
+                                    <button class="btn btn-success" id="btnSubmit" type="button"">提交</button>
+                                    
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--End page content-->
+            </div>
+            <!--END CONTENT CONTAINER-->
+            <!--ASIDE-->
+            <!--END ASIDE-->
+            <!--MAIN NAVIGATION-->
+            {include file="layout/menu"}
+            <!--END MAIN NAVIGATION-->
+        </div>
+        <!-- FOOTER -->
+        {include file="layout/footer"}
+        <!-- END FOOTER -->
+        <!-- SCROLL PAGE BUTTON -->
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+    </div>
+    <!-- END OF CONTAINER -->
+</body >
+<body onload=hidediv()>
+<script type="text/javascript" src="/static/admin/plugins/select2/js/select2.min.js?v=13"></script>
+<script type="text/javascript" src="/static/admin/plugins/select2/js/zh-CN.js?v=10"></script>
+<script>
+
+
+
+
+
+
+
+
+    $(function(){
+    //给btnsubmit绑定点击事件
+    $('#btnSubmit').on('click',function(){
+        //表单提交
+        $('form').submit();
+    })
+});
+
+
+function check(){
+//    var ph = $('input[name=phone]').val();
+//    if(ph!=''&&ph.match("^1[34578][0-9]{9}$") == null){
+//        layer.msg('手机号格式不正确');
+//        return false;
+//    }
+//    var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+//    var em = $('input[name=email]').val();
+//    if(ph!=''&&!reg.test(em)){
+//        layer.msg('邮箱格式不正确');
+//        return false;
+//    }
+    submit_prev('add_form');
+} 
+</script>
+</html>

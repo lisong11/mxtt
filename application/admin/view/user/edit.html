@@ -1,0 +1,207 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<div class="boxed">
+    <div id="content-container">
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <form method="post" action="editDo" id="edit_form" class="Validform"
+                              enctype="multipart/form-data" name="form">
+                            <input type="hidden" name="user_id" value="{$info.user_id}">
+                            <div class="panel-body form-horizontal form-padding">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">姓名</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="nickname"
+                                               value="{$info.nickname}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">电话</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="phone" value="{$info.phone}"
+                                               datatype="*">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">邮箱</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="email" value="{$info.email}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">手机</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="tel" value="{$info.tel}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">状态</label>
+                                    <div class="col-md-5">
+                                        <div class="radio">
+
+                                            <input id="radio-1" class="magic-radio" type="radio" name="status" value="1"
+                                                   {if condition="$info['status'] eq 1" }checked {/if}><label
+                                                for="radio-1">启用</label>
+                                            <input id="radio-2" class="magic-radio" type="radio" name="status" value="0"
+                                                   {if condition="$info['status'] eq 0" }checked {/if}><label
+                                                for="radio-2">禁用</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><span style="color:red;"></span>省</label>
+                                    <div class="col-md-5">
+
+                                        <select class="selectpicker" name="province_id" id="pro">
+
+                                            <option value="{$info.province_id}">{$info.province}</option>
+
+                                            {volist name="Area" id="vo"}
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><span style="color:red;"></span>市</label>
+                                    <div class="col-md-5">
+
+                                        <select class="selectpicker" name="city_id" id="city">
+                                            <option value="{$info.city_id}">{$info.city}</option>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><span style="color:red;"></span>区</label>
+                                    <div class="col-md-5">
+
+                                        <select class="selectpicker" name="county_id" id="area">
+                                            <option value="{$info.county_id}">{$info.county}</option>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">备注</label>
+                                    <div class="col-md-5">
+
+                                        <textarea rows="3" cols="20" class="form-control"
+                                                  name="remark">{$info.remark}</textarea>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer text-right">
+                                    <button class="btn btn-success" id="btnSubmit" type="button"
+                                    ">提交</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {include file="layout/menu"}
+</div>
+{include file="layout/footer"}
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+</body>
+<script>
+    $(function () {
+
+        //给btnsubmit绑定点击事件
+        $('#btnSubmit').on('click', function () {
+            if (document.form.phone.value == "") {
+                layer.msg('电话不能为空');
+                document.form.name.focus();
+                return false;
+            }
+            if (document.form.email.value == "") {
+                layer.msg('邮箱不能为空');
+                document.form.name.focus();
+                return false;
+            }
+
+            if (document.form.phone.value != '') {
+                var m = 0;
+                $.ajax({
+                    url: 'ajaxCheckRepeat',
+                    type: 'post',
+                    data: {phone: document.form.phone.value, user_id: document.form.user_id.value},
+                    dataType: 'json',
+                    async: false,
+                    success: function (returnData) {
+                        if (returnData.code != 0) {
+                            m = 1;
+                        }
+                    }
+                });
+                if (m) {
+                    layer.msg('电话已存在');
+                    document.form.phone.focus();
+                    return false;
+                }
+            }
+            if (document.form.email.value != '') {
+                var m = 0;
+                $.ajax({
+                    url: 'ajaxCheckRepeat',
+                    type: 'post',
+                    data: {email: document.form.email.value, user_id: document.form.user_id.value},
+                    dataType: 'json',
+                    async: false,
+                    success: function (returnData) {
+                        if (returnData.code != 0) {
+                            m = 1;
+                        }
+                    }
+                });
+                if (m) {
+                    layer.msg('邮箱已存在');
+                    document.form.email.focus();
+                    return false;
+                }
+            }
+            //表单提交
+            $('form').submit();
+        })
+    });
+    $('#pro').change(function () {
+        $.ajax({
+            type: "post",
+            url: "{:Url('school/getArea')}",
+            data: 'pro_id=' + $('#pro').val(),
+            dataType: "json",
+            success: function (data) {
+                var option = $("<option></option>");
+                $('#city').html(data);
+                $('#city').selectpicker('refresh');
+                $('#area').html(data);
+                $('#area').selectpicker('refresh');
+            }
+        });
+    });
+    $('#city').change(function () {
+        $.ajax({
+            type: "post",
+            url: "{:Url('school/getArea')}",
+            data: 'pro_id=' + $('#city').val(),
+            dataType: "json",
+            success: function (data) {
+                $('#area').html(data);
+                $('#area').selectpicker('refresh');
+            }
+        });
+    });
+</script>
+</html>

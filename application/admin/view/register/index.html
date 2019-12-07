@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会员注册</title>
+    <!--STYLESHEET-->
+    <link href="/static/hack/layui/css/layui.css" rel="stylesheet">
+    <link href="/static/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/css/nifty.min.css" rel="stylesheet">
+    <link href="/static/admin/css/demo/nifty-demo-icons.min.css" rel="stylesheet">
+    <link href="/static/admin/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+    <link href="/static/admin/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/static/admin/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/static/admin/css/my.css" rel="stylesheet">
+
+    <!--JAVASCRIPT-->
+    <script src="/static/admin/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/admin/js/jquery.cookie.js"></script>
+    <script src="/static/hack/layui/layui.js"></script>
+    <script src="/static/admin/js/myself.min.js"></script>
+    <!--Background Image [ DEMONSTRATION ]-->
+    <script src="/static/admin/js/demo/bg-images.js"></script>
+
+</head>
+<body>
+<div id="container" class="cls-container">
+    <!-- BACKGROUND IMAGE -->
+    <div id="bg-overlay" class="bg-img"
+         style="background-image: url('/static/admin/img/bg-img/bg-img-{:rand(1, 7)}.jpg');"></div>
+    <!-- LOGIN FORM -->
+    <div class="cls-content">
+        <div class="cls-content-sm panel">
+            <div class="panel-body">
+                <div class="mar-ver pad-btm">
+                    <h3 class="h4 mar-no">会员注册</h3>
+                    <p class="text-muted"></p>
+                </div>
+                <form action="registerDo" method="post" id="register_form" name="form">
+                    <div class="form-group" style="width:20%;float: left;margin-top:5px">
+                        <span>手机号</span>
+                    </div>
+                    <div class="form-group" style="width:80%;float: left">
+                        <input type="text" class="form-control" name="user_name">
+                    </div>
+                    <div class="form-group" style="width:20%;float: left;margin-top:5px">
+                        <span>新密码</span>
+                    </div>
+                    <div class="form-group" style="width:80%;float: left">
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <div class="form-group" style="width:20%;float: left;margin-top:5px">
+                        <span>验证码</span>
+                    </div>
+                    <div class="form-group" style="width:50%;float: left">
+                        <input type="text" class="form-control" name="newCode">
+                    </div>
+                    <div class="form-group" style="width:30%;float: left;height:30px">
+                        <button class="btn btn-success" id="code" type="button"
+                        " style="width: 92px;
+                        height: 29px;">获取</button>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg btn-block" type="button" id="btnSubmit">注册</button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- DEMO PURPOSE ONLY -->
+    <div class="demo-bg hidden">
+        <div id="demo-bg-list">
+            <div class="demo-loading"><i class="psi-repeat-2"></i></div>
+            <img class="demo-chg-bg bg-trans active" src="/static/admin/img/bg-img/thumbs/bg-trns.jpg"
+                 alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-1.jpg" alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-2.jpg" alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-3.jpg" alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-4.jpg" alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-5.jpg" alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-6.jpg" alt="Background Image">
+            <img class="demo-chg-bg" src="/static/admin/img/bg-img/thumbs/bg-img-7.jpg" alt="Background Image">
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //给btnsubmit绑定点击事件
+        $("#btnSubmit").on('click', function () {
+            var ph = document.form.user_name.value;
+            var password = document.form.password.value;
+            var code = document.form.newCode.value;
+            if (ph == '') {
+                layer.msg('手机号不能为空');
+                document.form.user_name.focus();
+                return false;
+            }
+            if (ph != '' && ph.match("^1[34578][0-9]{9}$") == null) {
+                layer.msg('手机号格式不对');
+                document.form.user_name.focus();
+                return false;
+            }
+            if (ph != '') {
+                var m = 0;
+                $.ajax({
+                    url: 'ajaxCheckPhone',
+                    type: 'post',
+                    data: {user_name: document.form.user_name.value},
+                    dataType: 'json',
+                    async: false,
+                    success: function (returnData) {
+                        if (returnData.code != 0) {
+                            m = 1;
+                        }
+                    }
+                });
+                if (m) {
+                    layer.msg('手机已注册');
+                    document.form.user_name.focus();
+                    return false;
+                }
+            }
+            if (password.length < 6) {
+                layer.msg('密码长度至少6位');
+                document.form.password.focus();
+                return false;
+            }
+            if (code == '') {
+                layer.msg('验证码不能为空');
+                document.form.code.focus();
+                return false;
+            }
+            if (code != '') {
+                $.ajax({
+                    url: 'ajaxCheckCode',
+                    type: 'post',
+                    data: {code: code},
+                    dataType: 'json',
+                    async: false,
+                    success: function (returnData) {
+                        if (returnData.code != 0) {
+                            m = 1;
+                        }
+                    }
+                });
+                if (m) {
+                    layer.msg('验证码不正确');
+                    document.form.user_name.focus();
+                    return false;
+                }
+            }
+            $('form').submit();
+        })
+        $("#code").on('click', function () {
+            var ph = document.form.user_name.value;
+            var password = document.form.password.value;
+            if (ph == '') {
+                layer.msg('手机号不能为空');
+                document.form.user_name.focus();
+                return false;
+            }
+            if (ph != '' && ph.match("^1[34578][0-9]{9}$") == null) {
+                layer.msg('手机号格式不对');
+                document.form.user_name.focus();
+                return false;
+            }
+            if (ph != '') {
+                var m = 0;
+                $.ajax({
+                    url: 'ajaxCheckPhone',
+                    type: 'post',
+                    data: {user_name: document.form.user_name.value},
+                    dataType: 'json',
+                    async: false,
+                    success: function (returnData) {
+                        if (returnData.code != 0) {
+                            m = 1;
+                        }
+                    }
+                });
+                if (m) {
+                    layer.msg('手机已注册');
+                    document.form.user_name.focus();
+                    return false;
+                }
+            }
+            if (password.length < 6) {
+                layer.msg('密码长度至少6位');
+                document.form.password.focus();
+                return false;
+            }
+            var m = 0;
+            $.ajax({
+                url: 'sendSms',
+                type: 'post',
+                data: {user_name: document.form.user_name.value},
+                dataType: 'json',
+                async: false,
+                success: function (returnData) {
+                    if (returnData.code != 0) {
+                        m = 1;
+                    }
+                }
+            });
+            if (m) {
+                layer.msg('验证码发送失败');
+                return false;
+            }
+        })
+
+    });
+    $(document).keydown(function (event) {
+        var e = event || window.event;
+        var k = e.keyCode || e.which;
+        if (k == 13) {
+            //enter 健
+            submit_prev('login_form', 1);
+        }
+    });
+</script>
+<!-- END OF CONTAINER -->
+</body>
+</html>

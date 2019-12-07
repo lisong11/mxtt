@@ -1,0 +1,102 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<style>
+    input{
+        border: none !important;
+    }
+</style>
+<!--END NAVBAR-->
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <!-- BASIC FORM ELEMENTS -->
+                        <div class="panel-body form-horizontal form-padding">
+                            <!--text-->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">机构名称：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.name}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">机构简介：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.detail}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">用户：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.user_name}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">课程图片：</label>
+                                <div class="col-md-6">
+                                    {volist name="list" id="vo"}
+                                    <img src="{$vo.img}" width="300px" height="200px" style="margin-top:10px">
+                                    {/volist}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">地址：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.address}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">经度：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.lat}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">纬度：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.lng}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">创建时间：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.create_tm}" >
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- END BASIC FORM ELEMENTS -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+<!-- SCROLL PAGE BUTTON -->
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+<!-- END OF CONTAINER -->
+</body>
+<script>
+
+</script>
+</html>

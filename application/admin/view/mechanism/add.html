@@ -1,0 +1,326 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<!--END NAVBAR-->
+<style>
+    .layui-upload-list img {
+        height: 92px;
+        width: 92px;
+    }
+</style>
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--End breadcrumb-->
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <!-- BASIC FORM ELEMENTS -->
+                        <style type="text/css">
+                            .layui-form-label {
+                                width: 200px;
+                            }
+
+                            .layui-form-select {
+                                width: 50% !important;
+                            }
+
+                            .layui-input-block {
+                                margin-left: 210px;
+                            }
+
+                            .newinput {
+                                width: 50%;
+                            }
+
+                            .layui-btn {
+                                margin-left: 10px;
+                            }
+
+                            .sub-button {
+                                margin-left: 300px;
+                            }
+
+                            .viewimg {
+                                margin-left: 210px;
+                                margin-bottom: 10px;
+                                display: none;
+                                width: 350px;
+                                height: 200px;
+                            }
+
+                            .viewimg img {
+                                width: 350px;
+                                height: 200px;
+                            }
+                        </style>
+                        <style>
+                            .pic-more {
+                                width: 100%;
+                                left;
+                                margin: 10px 0px 0px 0px;
+                            }
+
+                            .pic-more li {
+                                width: 120px;
+                                height: 120px;
+                                float: left;
+                                margin-right: 5px;
+                            }
+
+                            .pic-more li .layui-input {
+                                display: initial;
+                            }
+
+                            .pic-more li a {
+                                position: absolute;
+                                top: 0;
+                                display: block;
+                            }
+
+                            .pic-more li a i {
+                                font-size: 24px;
+                                background-color: #008800;
+                            }
+
+                            .slide-pc-priview .item_img img {
+                                width: 120px;
+                                height: 120px;
+                            }
+
+                            .slide-pc-priview li {
+                                position: relative;
+                            }
+
+                            .slide-pc-priview li .operate {
+                                color: #000;
+                                display: none;
+                            }
+
+                            .slide-pc-priview li .toleft {
+                                cursor: pointer;
+                                width: 20px;
+                                height: 40px;
+                                background: rgba(0, 0, 0, 0.5);
+                                float: left;
+                                font-size: 14px;
+                                color: #f2f2f2;
+                                text-align: center;
+                                line-height: 40px;
+                                position: absolute;
+                                top: 40px;
+                                z-index: 10;
+                                font-weight: bold;
+                            }
+
+                            .slide-pc-priview li .toright {
+                                cursor: pointer;
+                                width: 20px;
+                                height: 40px;
+                                background: rgba(0, 0, 0, 0.5);
+                                float: right;
+                                font-size: 14px;
+                                color: #f2f2f2;
+                                text-align: center;
+                                line-height: 40px;
+                                position: absolute;
+                                top: 40px;
+                                right: 0px;
+                                z-index: 10;
+                                font-weight: bold;
+                            }
+
+                            .slide-pc-priview li .close {
+                                position: absolute;
+                                top: 5px;
+                                right: 5px;
+                                cursor: pointer;
+                            }
+
+                            .slide-pc-priview li:hover .operate {
+                                display: block;
+                            }
+                        </style>
+                        <form method="post" action="addDo" id="add_form" class="layui-form"
+                              enctype="multipart/form-data">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">机构名称：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="name" placeholder="请输入机构名称" autocomplete="off"
+                                           class="layui-input newinput" lay-verify="title">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">机构简介：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入机构简介" style="width: 50%;" name="detail"
+                                              class="layui-textarea" lay-verify="detail"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn" id="imgs" style="margin-left:0px">多图片上传
+                                    </button>
+                                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                                style="margin-top: 10px;height: 180px;">
+                                        预览图(顺序显示最高级从左到右)：
+                                        <div class="layui-upload-list pic-more" id="show_img">
+                                            <ul class="pic-more-upload-list slide-pc-priview" id="priview">
+                                                <!--<li class="item_img">-->
+                                                <!--<div class="operate"><i class="toleft layui-icon"><</i><i-->
+                                                <!--class="toright layui-icon">></i><i class="close layui-icon"><img-->
+                                                <!--style="height: 20px;width: 20px;"-->
+                                                <!--src="/static/admin/img/del.jpg"></i></div>-->
+                                                <!--<img src="http://www.adm.com/uploads/images/201912/7651575618614.jpg"-->
+                                                <!--class="img"><input type="hidden" name="pc_src[]"-->
+                                                <!--value="1">-->
+                                                <!--</li>-->
+                                            </ul>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">地址：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="address" placeholder="请输入地址" autocomplete="off"
+                                           class="layui-input newinput" lay-verify="address">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">经度：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="lat" placeholder="请输入经度" autocomplete="off"
+                                           class="layui-input newinput" lay-verify="lat">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">纬度：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="lng" placeholder="请输入纬度" autocomplete="off"
+                                           class="layui-input newinput" lay-verify="lng">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">机构账号：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="user_name" placeholder="请输入机构账号" autocomplete="off"
+                                           class="layui-input newinput" lay-verify="user_name">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">密码：</label>
+                                <div class="layui-input-block">
+                                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off"
+                                           class="layui-input newinput" lay-verify="password">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block sub-button">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+<!-- SCROLL PAGE BUTTON -->
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+<!-- END OF CONTAINER -->
+</body>
+</html>
+<script>
+    //多图上传点击<>左右移动图片
+    $("body").on("click", ".pic-more ul li .toleft", function () {
+        var li_index = $(this).closest("li").index();
+        if (li_index >= 1) {
+            $(this).closest("li").insertBefore($(this).closest("ul").find("li").eq(Number(li_index) - 1));
+        }
+    });
+    $("body").on("click", ".pic-more ul li .toright", function () {
+        var li_index = $(this).closest("li").index();
+        $(this).closest("li").insertAfter($(this).closest("ul").find("li").eq(Number(li_index) + 1));
+    });
+    layui.use(['form', 'laydate', 'upload', 'layedit'], function () {
+        var form = layui.form;
+        var uploadUrl = "{:url('Common/uploadFile')}";
+        layui.use('upload', function () {
+            var upload = layui.upload;
+            //多图片上传
+            upload.render({
+                elem: '#imgs'
+                , url: uploadUrl
+                , multiple: true
+                , data: {type: '1'}
+                , size:1024
+                , progress: function (e, percent) {
+                    // var percent = percent;
+                    //将百分比显示到进度条
+                    $('.layui-layer-shade').show();
+                    $('.layui-layer-page').show();
+                    $('.layui-bg-red').attr('lay-percent', percent + '%');
+                    $('.layui-bg-red').width(percent + '%');
+                    $('.layui-progress-text').text(percent + '%');
+                }
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    // obj.preview(function (index, file, result) {
+                    //     $('#show_img').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" style="margin-left: 10px">');
+                    // });
+                }
+                , done: function (res) {
+                    if (res.code == 200) {
+                        $('.layui-layer-shade').hide();
+                        $('.layui-layer-page').hide();
+                        $('#priview').append('<li class="item_img"> <div class="operate"><i class="toleft layui-icon"><</i><i class="toright layui-icon">></i><i class="close layui-icon"><img style="height: 20px;width: 20px;" src="/static/admin/img/del.jpg"></i></div> <img src="' + res.url + '" class="img"><input type="hidden" name="course_imgs[]" value="' + res.url + '"> </li>');
+
+                    }
+                    $("#course_imgs").append('<input type="hidden" name="course_imgs[]" value="' + res.url + '">');
+                    //上传完毕
+                }
+            });
+
+
+        });
+
+
+        form.verify({
+            title: function (value, item) {
+                if (value == '') {
+                    return '课程名称不能为空';
+                }
+            },
+            detail: function (value, item) {
+                if (value == '') {
+                    return '课程内容不能为空';
+                }
+            }
+        });
+    })
+</script>
+
+
+
+<script src="/static/admin/plugins/ckeditor/ckeditor.js"></script>
+

@@ -1,0 +1,360 @@
+#content-container{padding-top: 35px;}
+.table thead tr th,.table tbody tr td{text-align:center;vertical-align:middle; }
+.nodes{
+    padding: 10px;
+    border-left:1px dotted #dddddd;
+}
+.header{
+    padding:10px;
+    padding-left:25px;
+    border-bottom:1px dotted #dddddd;
+}
+.header:before{
+    border-top: 1px dotted #dddddd;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 30px;
+    margin: 10px 0 0  -32px;
+}
+.subnodes{
+    margin-left:80px;
+    padding:10px;
+}
+.glyphicon{
+    cursor:pointer;
+}
+
+input.time{
+    width:15%;
+    display:inline;
+    cursor:pointer;   
+}
+.room{
+    font-size: 18px;
+    padding:6px;
+    border: 1.5px solid black;
+}
+.room_select{
+    font-size: 18px;
+    padding:6px;
+    border: 2px solid #4cae4c;
+    color: #4cae4c !important; 
+}
+.room_table{
+    margin-top:5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor:pointer;   
+}
+.room_table td{width: 70px;}
+
+.room_selected {
+    display: block;
+    background-color: #f9f7f7;
+    border: 1.5px solid #dedede;
+    border-top: 1.5px solid #eee;
+    border-left: 1.5px solid #eee;
+    color: #cdcccc;
+    padding:5px;
+    width: 60px;
+    margin: 5px;
+    margin-right: 13px;
+    cursor:pointer;   
+}
+a.room_first:hover{color:#4cae4c;}
+.text-right {
+    text-align: center;
+}
+.device_div{
+    display: inline-block;
+    width:40%;
+    border:1px solid gray;
+    padding: 0px 10px 0px 10px;
+    margin:0 40px 40px 50px;
+    min-height:200px;
+}
+
+
+/*操作样式*/
+/*.table a:link {
+    color: #FFFFFF;
+}
+.table a:hover {
+    color: #FFFFFF;
+}*/
+
+.btn-bg1{background-color: #009933;border-color: #009933;color: #fff;}
+.btn-bg2{background-color: #009999;border-color: #009999;color: #fff;}
+.btn-bg3{background-color: #00cc66;border-color: #00cc66;color: #fff;}
+.btn-bg4{background-color: #cc00ff;border-color: #cc00ff;color: #fff;}
+  .btn-bg5{background-color: #F75000;border-color: #ffcccc;color: #fff;}
+.btn-bg6{background-color: #999900;border-color: #999900;color: #fff;}
+.btn-bg7{background-color: #006666;border-color: #006666;color: #fff;}
+.btn-blue{background-color: #2db1ed;border-color: #2db1ed;color: #fff;}
+.btn-red{background-color: #eb1313;border-color: #eb1313;color: #fff;}
+
+
+
+/**************设备样式*****************/
+.now{
+    background-color: #00aaf7;
+}
+/*整体div*/
+.div_1{
+    width: 1100px;
+    height: 600px;
+    margin:0 auto;
+}
+.div_2{
+    width: 200px;
+    height: 600px;
+    float: left;
+    background-color: #F0F0F0;
+    text-align: center;
+    padding-top: 20px;
+}
+.div_2 button{
+    font-size: 18px;
+    width: 120px;
+    margin:15px 0px;
+}
+.div_3{
+    width: 900px;
+    height: 600px;
+    float: right;
+}
+.div_4{
+    width: 900px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 18px;
+}
+.div_4 span{
+    margin:0px 20px;
+}
+.div_5{
+    width: 900px;
+    height: 500px;
+    padding:20px;
+    text-align: center;
+}
+/*灯光*/
+.dengguang .div_5 div{
+    width: 150px;
+    float: left;
+}
+.dengguang .i_con{
+    font-size: 20px;
+    margin-top: 20px;
+}
+.dengguang .i_con i{
+    color: green;
+    font-size: 20px;
+}
+.dengguang .i_con span{
+    cursor: pointer;
+    margin-right: 10px;
+}
+.dengguang .div_5 button{
+    height: 60px;
+    font-size: 22px;
+    margin: 200px 20px 0px 10px;
+    background-color: #5B5B5B;
+    position: relative;
+}
+.dengguang .div_5 button span{
+    position: absolute;
+    top: -5px;
+    right: -8px;
+}
+/*新风*/
+.xinfeng .div_5 button{
+    font-size: 22px;
+    margin-top: 100px;
+    width: 100px;
+    margin-right: 50px;
+}
+/*显示*/
+.xianshi .div_6{
+    width: 100%;
+    height: 100%;
+    padding:20px;
+}
+.xianshi .div_7{
+    width: 300px;
+    height: 600px;
+    float: left;
+    text-align: center;
+}
+.xianshi .div_8{
+    margin:20px 0px;
+}
+.xianshi div button{
+    width: 80px;
+}
+/*窗帘*/
+.chuanglian{
+    padding-top: 100px;
+    height: 500px;
+}
+.chuanglian .div_9{
+    width: 900px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+.chuanglian .div_9 button{
+    width: 100px;
+    font-size: 18px;
+}
+/*录播*/
+.lubo{
+    padding-top: 100px;
+    height: 500px;
+}
+.lubo .div_9{
+    width: 900px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+.lubo .div_9 button{
+    width: 100px;
+    font-size: 18px;
+}
+.menjin{
+    padding-top: 100px;
+    height: 500px;
+}
+.menjin div{
+    width: 900px;
+    text-align: center;
+}
+.menjin button{
+    width: 100px;
+    font-size: 18px;
+}
+/*遥控样式*/
+.arrow2{
+    position: absolute;
+    top:135px;
+    left:70px;
+    width:0;
+    height:0;
+    border-top:50px solid #FFF;         /*设置并显示上边框*/
+    border-bottom:none;             /*不设置下边框*/
+    border-left:30px solid transparent;     /*设置但隐藏左边框*/
+    border-right:30px solid transparent;    /*设置但隐藏右边框*/
+    cursor: pointer;
+}
+.arrow1{
+    position: absolute;
+    left:70px;
+    top:10px;
+    width:0;
+    height:0;
+    border-top:none;     /*设置并显示上边框*/
+    border-bottom:50px solid #FFF;             /*不设置下边框*/
+    border-left:30px solid transparent;     /*设置但隐藏左边框*/
+    border-right:30px solid transparent;    /*设置但隐藏右边框*/
+    cursor: pointer;
+}
+.arrow3{
+    position: absolute;
+    top:68px;
+    left:15px;
+    width:0;
+    height:0;
+    border-top:30px solid transparent;    /*设置并显示上边框*/
+    border-bottom:30px solid transparent;           /*不设置下边框*/
+    border-left: none;     /*设置但隐藏左边框*/
+    border-right:50px solid #FFF;      /*设置但隐藏右边框*/
+    cursor: pointer;
+}
+.arrow4{
+    position: absolute;
+    top:68px;
+    left:135px;
+    width:0;
+    height:0;
+    border-top:30px solid transparent;    
+    border-bottom:30px solid transparent;           
+    border-left: 50px solid #FFF; 
+    cursor: pointer;
+}
+.xianshi .div_7 .arrow{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    background-color: #ADADAD;
+    margin:0 auto;
+    -webkit-border-radius: 100px; 
+}
+.center{
+    position: absolute;
+    top: 72px;
+    left: 75px;
+    width:50px; 
+    height:50px; 
+    background-color:#FFF; 
+    border-radius:25px;
+    cursor: pointer;
+}
+.center span{
+    height:50px; 
+    line-height:50px; 
+    display:block; 
+    color:black; 
+    text-align:center;
+    font-size: 18px;
+}
+
+.xianshi .div_7 .arrow_xia{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin:0 auto;
+}
+.arrow5{
+    position: absolute;
+    top:8px;
+    left:15px;
+    width:0;
+    height:0;
+    border-top:30px solid transparent;    /*设置并显示上边框*/
+    border-bottom:30px solid transparent;           /*不设置下边框*/
+    border-left: none;     /*设置但隐藏左边框*/
+    border-right:50px solid #ccc;      /*设置但隐藏右边框*/
+    cursor: pointer;
+}
+.arrow6{
+    position: absolute;
+    top:8px;
+    left:135px;
+    width:0;
+    height:0;
+    border-top:30px solid transparent;    
+    border-bottom:30px solid transparent;           
+    border-left: 50px solid #ccc; 
+    cursor: pointer;
+}
+.center2{
+    position: absolute;
+    top: 12px;
+    left: 75px;
+    width:50px; 
+    height:50px; 
+    background-color:#ccc; 
+    border-radius:25px;
+    cursor: pointer;
+}
+.center2 span{
+    height:50px; 
+    line-height:50px; 
+    display:block; 
+    color:black; 
+    text-align:center;
+    font-size: 18px;
+}

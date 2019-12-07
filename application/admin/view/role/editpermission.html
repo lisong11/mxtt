@@ -1,0 +1,120 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+        <!--END NAVBAR-->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <div id="content-container">
+                <!--Page content-->
+                <div id="page-content">
+                    <div class="row">
+                    <div class="panel">
+                            {include file="layout/bread"}
+                        <!--Data Table-->
+                        <div class="panel-body">
+                           <div class="panel-body">
+            <form method="post" action="editPermissionDo">
+                <input type="hidden" name="roleId" value="{$roleId}">
+                <div class="nodes">
+                    {volist name="nodeList" id="node"}
+                    <div class="item"> 
+                        <div class="header ">
+                            <span class="glyphicon  glyphicon-chevron-down"></span> &nbsp;&nbsp;&nbsp;
+                            <label><input type="checkbox" name="nodeId[]" value="{$node.id}" 
+                                          {eq name="node.is_allow" value="1"} checked="" {/eq}> {$node.node_name}</label>
+                        </div>
+                        <div class="subnodes hide"> 
+                            <div class="nodes"> 
+                                {if isset($node['son'])}
+                                {volist name="node.son" id="nodeSon"}
+                                <div class="item"> 
+                                    <div class="header "> 
+                                        <span class="glyphicon  glyphicon-chevron-down"></span>&nbsp;&nbsp;&nbsp;
+                                        <label><input type="checkbox" name="nodeId[]" value="{$nodeSon.id}"
+                                                      {eq name="nodeSon.is_allow" value="1"} checked="" {/eq} /> {$nodeSon.node_name}</label> 
+                                    </div> 
+                                    <div class="subnodes hide"> 
+                                        <div class="nodes"> 
+                                            {if isset($nodeSon['son'])}
+                                            {volist name="nodeSon.son" id="nodeSonSon"}
+                                            <div class="item"> 
+                                                <label><input type="checkbox" name="nodeId[]" value="{$nodeSonSon.id}"
+                                                              {eq name="nodeSonSon.is_allow" value="1"} checked="" {/eq} /> {$nodeSonSon.node_name}</label> 
+                                            </div> 
+                                            {/volist}
+                                            {/if}
+                                        </div>
+                                    </div>
+                                </div>
+                                {/volist}
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {/volist}
+                    <a class="btn btn-default" href="javascript:window.history.go(-1);">取消</a>
+                    <span style="display: inline-block;width: 20px;"></span>
+                    <button class="btn  btn-primary" >确定</button>
+            </form>
+            </>
+        </div>
+                        <!--End Data Table-->
+                    </div>
+                </div>
+                <!--End page content-->
+            </div>
+            <!--END CONTENT CONTAINER-->
+            <!--ASIDE-->
+            <!--END ASIDE-->
+            <!--MAIN NAVIGATION-->
+            {include file="layout/menu"}
+            <!--END MAIN NAVIGATION-->
+        </div>
+        <!-- FOOTER -->
+        {include file="layout/footer"}
+        <!-- END FOOTER -->
+    </div>
+    <!-- END OF CONTAINER -->
+ <script>
+$(function () {
+    //节点的展开和收起
+    $('.glyphicon').click(function () {
+        set_toogle(this);
+    });
+    $("div.header>label>input").change(function () {
+        var isChecked = $(this).prop("checked");
+        //处理下级
+        var _nodes = $(this).parent("label").parent("div.header").next(".subnodes").children(".nodes");
+        setNodeCheckStatus(_nodes, isChecked);
+    });
+    //节点的全选和全部选
+    function setNodeCheckStatus(_nodes, isChecked)
+    {
+        _nodes.children("div.item").each(function () {
+            //检查是否还有下级
+            if ($(this).children("div.header").length > 0) {
+                //有下级
+                $(this).children("div.header").children("label").children("input").prop("checked", isChecked);
+                //递归处理下级
+                setNodeCheckStatus($(this).children("div.subnodes").children("div.nodes"), isChecked);
+            } else {
+                //没有下级
+                $(this).children("label").children("input").prop("checked", isChecked);
+            }
+        });
+    }
+})
+function set_toogle(obj) {
+    if($(obj).hasClass('glyphicon-chevron-down')){
+        $(obj).removeClass('glyphicon-chevron-down');
+        $(obj).addClass('glyphicon-chevron-up');
+    }else{
+        $(obj).removeClass('glyphicon-chevron-up');
+        $(obj).addClass('glyphicon-chevron-down');
+    }
+    $(obj).parent('div.header').next(".subnodes").toggleClass("hide");
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,128 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<style>
+    input{
+        border: none !important;
+    }
+</style>
+<!--END NAVBAR-->
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <!-- BASIC FORM ELEMENTS -->
+                        <div class="panel-body form-horizontal form-padding">
+                            <!--text-->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">课时名称：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.title}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">课时简介：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.detail}" >
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="border-bottom: 1px solid #eee;padding-left: 30px">
+                                <label class="layui-form-label" style="font-size: 16px;font-weight: bold">教案</label>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-md-2 control-label" style="margin-top:40px">视频：</label>
+                                <div class="col-md-6">
+                                    {volist name="info.plan_video" id="data"}
+                                    <video width="450" height="350" controls="controls" type="video/mp4" preload="auto">
+                                        <source src="{$data}" autostart="false">
+                                    </video>
+                                    {/volist}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">图片：<a href="/Course/courseDetail?course_id={$info.course_id}" class="btn btn-xs btn-bg3">上移</a></label>
+                                <div class="col-md-6">
+                                    {volist name="info.plan_img" id="data"}
+                                    <img src="{$data}" width="300px" height="200px" style="margin-top:10px">
+                                    {/volist}
+                                </div>
+                            </div>
+
+                            <!--<div class="form-group">-->
+                            <!--<label class="col-md-2 control-label">视频：</label>-->
+                            <!--<div class="col-md-6">-->
+                            <!--<video width="450" height="350" controls="controls" type="video/mp4" preload="auto">-->
+                            <!--<source src="{$info.video_url}" autostart="false">-->
+                            <!--</video>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="layui-form-item" style="border-bottom: 1px solid #eee;padding-left: 30px">
+                                <label class="layui-form-label" style="font-size: 16px;font-weight: bold;width: 120px;">课前预习</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">课时简介：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.b_title}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">图片：</label>
+                                <div class="col-md-6">
+                                    {volist name="info.homework_img" id="data"}
+                                    <img src="{$data}" width="300px" height="200px" style="margin-top:10px">
+                                    {/volist}
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="border-bottom: 1px solid #eee;padding-left: 30px">
+                                <label class="layui-form-label" style="font-size: 16px;font-weight: bold;width: 120px;">课后作业</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">课时简介：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" value="{$info.a_title}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">图片：</label>
+                                <div class="col-md-6">
+                                    {volist name="info.homework_video" id="data"}
+                                    <img src="{$data}" width="300px" height="200px" style="margin-top:10px">
+                                    {/volist}
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- END BASIC FORM ELEMENTS -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+<!-- SCROLL PAGE BUTTON -->
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+<!-- END OF CONTAINER -->
+</body>
+<script>
+
+</script>
+</html>

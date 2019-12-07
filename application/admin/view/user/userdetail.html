@@ -1,0 +1,161 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+
+<style type="text/css">
+    .img {
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+    }
+
+    input {
+        border: none !important;
+    }
+
+    .col-md-5 {
+        padding-top: 7px;
+    !important;
+    }
+</style>
+
+<div class="boxed">
+    <div id="content-container">
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <form method="post" action="editDo" id="edit_form" class="Validform">
+                            <input type="hidden" name="user_id" value="{$info.user_id}">
+                            <div class="panel-body form-horizontal form-padding">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">ID</label>
+                                    <div class="col-md-5">
+                                        {$info.user_id}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">名字</label>
+                                    <div class="col-md-5">
+                                        {$info.nickname}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">头像</label>
+                                    <div class="col-md-5">
+                                        <img src="{$info.headimgurl}" class="img">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">电话</label>
+                                    <div class="col-md-5">
+                                        {$info.phone}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">邮箱</label>
+                                    <div class="col-md-5">
+                                        {$info.email}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">座机</label>
+                                    <div class="col-md-5">
+                                        {$info.tel}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">主openid</label>
+                                    <div class="col-md-5">
+                                        {$info.openid}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">缴费openid</label>
+                                    <div class="col-md-5">
+                                        {$info.openid2}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">状态</label>
+                                    <div class="col-md-5">
+                                        {if $info.status==1}正常{elseif $info.status==0}禁用{/if}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">地区</label>
+                                    <div class="col-md-5">
+                                        {$info.province}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$info.city}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$info.county}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">余额</label>
+                                    <div class="col-md-5">
+                                        {$info.balance/100}元
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">主家长ID</label>
+                                    <div class="col-md-5">
+                                        {$info.owner_id}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">vip开始</label>
+                                    <div class="col-md-5">
+                                        {$info.vip_start_time}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">vip截止</label>
+                                    <div class="col-md-5">
+                                        {$info.vip_time}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">首次VIP</label>
+                                    <div class="col-md-5">
+                                        {$info.vip_end_time}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">亲属关系</label>
+                                    <div class="col-md-5">
+                                        {if $info.relationship==1}爸{elseif $info.relationship==2}妈{elseif
+                                        $info.relationship==3}爷爷{elseif $info.relationship==4}奶奶{elseif
+                                        $info.relationship==5}姥爷{elseif $info.relationship==6}姥姥{/if}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">创建时间</label>
+                                    <div class="col-md-5">
+                                        {$info.create_time}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">备注</label>
+                                    <div class="col-md-5">
+                                        {$info.remark}
+                                    </div>
+                                </div>
+                                <div class="panel-footer text-right">
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {include file="layout/menu"}
+</div>
+{include file="layout/footer"}
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+</body>
+</html>
+
