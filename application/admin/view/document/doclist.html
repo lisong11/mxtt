@@ -1,0 +1,94 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<style type="text/css">
+    .img {
+    . width: 40 px;
+        height: 40px;
+        border-radius: 20px;
+    }
+</style>
+<!--END NAVBAR-->
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="panel">
+                    {include file="layout/bread"}
+                    <!--Data Table-->
+                    <div class="panel-body">
+
+                        <div class="pad-btm form-inline">
+                            <div class="row">
+                                <div class="col-sm-10 table-toolbar-left">
+                                    <form class="form-inline" action="" method="get">
+                                        <input type="hidden" value="{$course_id}" name="course_id">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover toggle-circle form-horizontal"
+                                   data-page-size="7">
+                                <thead>
+                                <tr>
+                                    <th width="3%">ID</th>
+                                    <th width="8%">接口名称</th>
+                                    <th width="8%">接口地址</th>
+                                    <th width="8%">接口作者</th>
+                                    <th width="13%">创建时间</th>
+                                    <th width="18%">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="list.data" id="vo"}
+                                <tr>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.title}</td>
+                                    <td>{$vo.address}</td>
+                                    <td>{$vo.author}</td>
+                                    <td>{$vo.create_tm}</td>
+                                    <td>
+                                        <a href="{:url('document/edit','&id='.$vo.id)}" class="btn btn-xs btn-bg1"
+                                           style="margin:auto 3px;">编辑</a>
+                                        <a href="{:url('document/docDetail','&id='.$vo.id)}"
+                                           class="btn btn-xs btn-bg2" style="margin:auto 3px;">查看</a>
+                                        <a onclick="del({$vo.id})" class="btn btn-xs btn-red"
+                                           style="margin:auto 3px;">删除</a>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                {if empty($list['data'])}
+                                <tr>
+                                    <td colspan="9" style="text-align:center !important;">暂无数据</td>
+                                </tr>
+                                {/if}
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                {$page}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Data Table-->
+            </div>
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+</div>
+<!-- END OF CONTAINER -->
+</body>
+</html>

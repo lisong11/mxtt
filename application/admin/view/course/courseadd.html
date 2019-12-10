@@ -304,37 +304,37 @@
 
                             <div id="videocontent"></div>
                             <!--</div>-->
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <button type="button" class="layui-btn" id="video" style="margin-left:0px">视频上传
-                                    </button>
-                                    <blockquote class="layui-elem-quote layui-quote-nm"
-                                                style="margin-top: 10px;height: 230px;">
-                                        预览(上传速度和网速和文件大小有关,若文件较大，请耐心等待)：
-                                        <div class="layui-upload-list video-more" id="show_video">
-                                            <ul class="pic-more-upload-list slide-pc-privideo" id="privideo">
-                                                <li class="item_img" style="margin-top: 20px">
-                                                    <div class="operate"><i class="toleft layui-icon"><</i><i
-                                                            class="toright layui-icon">></i><i class="close layui-icon"
-                                                                                               style="margin-top: -25px"><img
-                                                            style="height: 20px;width: 30px;"
-                                                            src="/static/admin/img/del.jpg"></i></div>
-                                                    <video style="width: 200px;height: 150px;margin-left: 20px"
-                                                           controls="controls" type="video/mp4" preload="auto">
-                                                        <source autostart="false"
-                                                                src="http://www.adm.com/uploads/videos/201912/8261575621113.mp4"
-                                                                alt="1.video" class="layui-upload-img">
-                                                    </video>
+                            <!--<div class="layui-form-item">-->
+                            <!--<div class="layui-input-block">-->
+                            <!--<button type="button" class="layui-btn" id="video" style="margin-left:0px">视频上传-->
+                            <!--</button>-->
+                            <!--<blockquote class="layui-elem-quote layui-quote-nm"-->
+                            <!--style="margin-top: 10px;height: 230px;">-->
+                            <!--预览(上传速度和网速和文件大小有关,若文件较大，请耐心等待)：-->
+                            <!--<div class="layui-upload-list video-more" id="show_video">-->
+                            <!--<ul class="pic-more-upload-list slide-pc-privideo" id="privideo">-->
+                            <!--<li class="item_img" style="margin-top: 20px">-->
+                            <!--<div class="operate"><i class="toleft layui-icon"><</i><i-->
+                            <!--class="toright layui-icon">></i><i class="close layui-icon"-->
+                            <!--style="margin-top: -25px"><img-->
+                            <!--style="height: 20px;width: 30px;"-->
+                            <!--src="/static/admin/img/del.jpg"></i></div>-->
+                            <!--<video style="width: 200px;height: 150px;margin-left: 20px"-->
+                            <!--controls="controls" type="video/mp4" preload="auto">-->
+                            <!--<source autostart="false"-->
+                            <!--src="http://www.adm.com/uploads/videos/201912/8261575621113.mp4"-->
+                            <!--alt="1.video" class="layui-upload-img">-->
+                            <!--</video>-->
 
-                                                </li>
+                            <!--</li>-->
 
-                                            </ul>
-                                        </div>
-                                    </blockquote>
+                            <!--</ul>-->
+                            <!--</div>-->
+                            <!--</blockquote>-->
 
-                                </div>
+                            <!--</div>-->
 
-                            </div>
+                            <!--</div>-->
                             <div class="layui-form-item" style="border-bottom: 1px solid #eee;">
                                 <label class="layui-form-label" style="font-size: 16px;font-weight: bold">添加课时作业</label>
                             </div>
@@ -435,7 +435,7 @@
             type: 'post',
             data: {data: 1},
             dataType: 'json',
-            async: false,
+            // async: false,
             success: function (result) {
                 $('#imgcontent').append('<div class="layui-form-item"><div class="layui-input-block"><button type="button" class="layui-btn" id="' + result.data + '" style="margin-left:0px">多图片上传</button><blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;height: 180px;">预览图(顺序显示最高级从左到右)：<div class="layui-upload-list pic-more" ><ul class="pic-more-upload-list slide-pc-priview" id="' + result.ul + '"></ul></div></blockquote></div> </div>');
                 var uploadUrl = "{:url('Common/uploadFile')}";
@@ -454,24 +454,21 @@
                         , multiple: true
                         , data: {type: '1'}
                         , size: 1024
-                        , progress: function (e, percent) {
-                            var percent = percent;
-                            //将百分比显示到进度条
+                        // , progress: function (e, percent) {
+                        //     //将百分比显示到进度条
+                        //     $('.layui-layer-shade').show();
+                        //     $('.layui-layer-page').show();
+                        //     $('.layui-bg-red').attr('lay-percent', percent + '%');
+                        //     $('.layui-bg-red').width(percent + '%');
+                        //     $('.layui-progress-text').text(percent + '%');
+                        // }
+                        , before: function () {
                             $('.layui-layer-shade').show();
                             $('.layui-layer-page').show();
-                            $('.layui-bg-red').attr('lay-percent', percent + '%');
-                            $('.layui-bg-red').width(percent + '%');
-                            $('.layui-progress-text').text(percent + '%');
-                        }
-                        , choose: function (obj) {
-                            obj.preview(function (index, file, result) {
-                                $("#fileName").html(file.name);
-                            });
-                        }
-                        , before: function (obj) {
-                            //预读本地文件示例，不支持ie8
-                            obj.preview(function (index, file, result) {
-                            });
+                            $('.layui-bg-red').attr('lay-percent', 50 + '%');
+                            $('.layui-bg-red').width(50 + '%');
+                            $('.layui-progress-text').text();
+
                         }
                         , done: function (res) {
 
@@ -496,66 +493,52 @@
             type: 'post',
             data: {data: 1},
             dataType: 'json',
-            async: false,
+            // async: false,
             success: function (result) {
                 var htm = '<div class="layui-form-item">';
                 htm += '<div class="layui-input-block">';
-                htm += '<button type="button" class="layui-btn" id="video" style="margin-left:0px">视频上传</button>';
+                htm += '<button type="button" class="layui-btn" id="' + result.data + '" style="margin-left:0px" >视频上传</button>';
                 htm += '<blockquote class="layui-elem-quote layui-quote-nm"\n' +
                     '                style="margin-top: 10px;height: 230px;">';
                 htm += '预览(上传速度和网速和文件大小有关,若文件较大，请耐心等待)：';
                 htm += '<div class="layui-upload-list video-more" id="show_video">';
-                htm += '<ul class="pic-more-upload-list slide-pc-privideo" id="privideo">';
-                htm += '<li class="item_img" style="margin-top: 20px">';
-                htm += '<div class="operate"><i class="close layui-icon" style="margin-top: -25px">';
-                htm += '<img style="height: 20px;width: 30px;" src="/static/admin/img/del.jpg"></i></div>';
-                htm += '<video style="width: 200px;height: 150px;margin-left: 20px" controls="controls" type="video/mp4" preload="auto"> <source autostart="false" src="http://www.adm.com/uploads/videos/201912/8261575621113.mp4" alt="1.video" class="layui-upload-img"></video>\n';
-                htm += '</li></ul></div></blockquote></div>';
+                htm += '<ul class="pic-more-upload-list slide-pc-privideo" id="' + result.ul + '">';
+                htm += '</ul></div></blockquote></div>';
                 htm += '</div>';
                 $('#videocontent').append(htm);
-                var uploadUrl = "{:url('Common/uploadFile')}";
-                var elem = '#';
-                elem += result.data;
-                var append = '#';
-                append += result.ul;
-                var courseimgs = result.img;
-                courseimgs += '[]';
+                var videoUrl = "{:url('Course/videoUpload')}";
+                var elev = '#';
+                elev += result.data;
+                var appendv = '#';
+                appendv += result.ul;
+                var coursevideos = result.video;
+                coursevideos += '[]';
                 layui.use('upload', function () {
                     var upload = layui.upload;
-                    //多图片上传
                     upload.render({
-                        elem: elem
-                        , url: uploadUrl
+                        elem: elev
+                        , url: videoUrl
                         , multiple: true
-                        , data: {type: '1'}
-                        , size: 1024
-                        , progress: function (e, percent) {
-                            var percent = percent;
-                            //将百分比显示到进度条
+                        , accept: 'video'
+                        , exts: 'mp4'
+                        , data: {type: '2'}
+                        , before: function () {
                             $('.layui-layer-shade').show();
                             $('.layui-layer-page').show();
-                            $('.layui-bg-red').attr('lay-percent', percent + '%');
-                            $('.layui-bg-red').width(percent + '%');
-                            $('.layui-progress-text').text(percent + '%');
-                        }
-                        , choose: function (obj) {
-                            obj.preview(function (index, file, result) {
-                                $("#fileName").html(file.name);
-                            });
-                        }
-                        , before: function (obj) {
-                            //预读本地文件示例，不支持ie8
-                            obj.preview(function (index, file, result) {
-                            });
+                            $('.layui-bg-red').attr('lay-percent', 50 + '%');
+                            $('.layui-bg-red').width(50 + '%');
+                            $('.layui-progress-text').text();
+
                         }
                         , done: function (res) {
-
                             if (res.code == 200) {
                                 $('.layui-layer-shade').hide();
                                 $('.layui-layer-page').hide();
-                                $(append).append('<li class="item_img"> <div class="operate"><i class="toleft layui-icon"><</i><i class="toright layui-icon">></i><i class="close layui-icon"><img style="height: 20px;width: 20px;" src="/static/admin/img/del.jpg"></i></div> <img src="' + res.url + '" class="img"><input type="hidden" name="' + courseimgs + '" value="' + res.url + '"> </li>');
+
+                                $(appendv).append('<li class="item_img" style="margin-top: 20px"><div class="operate"><i class="close layui-icon" style="margin-top: -25px"><img style="height: 20px;width: 30px;" src="/static/admin/img/del.jpg"></i></div><video style="width: 200px;height: 150px;margin-left: 20px" controls="controls" type="video/mp4" preload="auto"> <source autostart="false" src="' + res.url + '" class="layui-upload-img"></video><input type="hidden" name="' + coursevideos + '" value="' + res.url + '"> </li>');
 
                             }
+
                         }
                     });
 
@@ -576,16 +559,16 @@
         var li_index = $(this).closest("li").index();
         $(this).closest("li").insertAfter($(this).closest("ul").find("li").eq(Number(li_index) + 1));
     });
-    $("body").on("click", ".video-more ul li .toleft", function () {
-        var li_index = $(this).closest("li").index();
-        if (li_index >= 1) {
-            $(this).closest("li").insertBefore($(this).closest("ul").find("li").eq(Number(li_index) - 1));
-        }
-    });
-    $("body").on("click", ".video-more ul li .toright", function () {
-        var li_index = $(this).closest("li").index();
-        $(this).closest("li").insertAfter($(this).closest("ul").find("li").eq(Number(li_index) + 1));
-    });
+    // $("body").on("click", ".video-more ul li .toleft", function () {
+    //     var li_index = $(this).closest("li").index();
+    //     if (li_index >= 1) {
+    //         $(this).closest("li").insertBefore($(this).closest("ul").find("li").eq(Number(li_index) - 1));
+    //     }
+    // });
+    // $("body").on("click", ".video-more ul li .toright", function () {
+    //     var li_index = $(this).closest("li").index();
+    //     $(this).closest("li").insertAfter($(this).closest("ul").find("li").eq(Number(li_index) + 1));
+    // });
     //点击多图上传的X,删除当前的图片
     $("body").on("click", ".close", function () {
         $(this).closest("li").remove();
@@ -605,27 +588,23 @@
                 , multiple: true
                 , data: {type: '1'}
                 , size: 1024
-                , progress: function (e, percent) {
-                    var percent = percent;
-                    //将百分比显示到进度条
+                // , progress: function (e, percent) {
+                //     var percent = percent;
+                //     //将百分比显示到进度条
+                //     $('.layui-layer-shade').show();
+                //     $('.layui-layer-page').show();
+                //     $('.layui-bg-red').attr('lay-percent', percent + '%');
+                //     $('.layui-bg-red').width(percent + '%');
+                //     $('.layui-progress-text').text(percent + '%');
+                // }
+
+                , before: function () {
                     $('.layui-layer-shade').show();
                     $('.layui-layer-page').show();
-                    $('.layui-bg-red').attr('lay-percent', percent + '%');
-                    $('.layui-bg-red').width(percent + '%');
-                    $('.layui-progress-text').text(percent + '%');
-                }
-                , choose: function (obj) {
-                    obj.preview(function (index, file, result) {
-                        $("#fileName").html(file.name);
-                    });
-                }
-                , before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
+                    $('.layui-bg-red').attr('lay-percent', 50 + '%');
+                    $('.layui-bg-red').width(50 + '%');
+                    $('.layui-progress-text').text();
 
-                        // $('#show_img').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" style="margin-left: 10px">');
-                        //$('#slide-pc-priview').append('<li class="item_img"> <div class="operate"><i class="toleft layui-icon"><</i><i class="toright layui-icon">></i><i class="close layui-icon"><img style="height: 20px;width: 20px;" src="/static/admin/img/del.jpg"></i></div> <img src="' + result + '" class="img"><input type="hidden" name="pc_src[]" value="1"> </li>');
-                    });
                 }
                 , done: function (res) {
 
@@ -636,13 +615,6 @@
 
                     }
 
-
-                    // $('.layui-bg-red').attr('lay-percent', '0%');
-                    // $('.layui-bg-red').width('0%');
-                    // $('.layui-progress-text').text('0%');
-                    //  layer.msg('上传成功');
-                    //$("#course_imgs").append('<input type="hidden" name="course_imgs[]" value="' + res.url + '">');
-                    //上传完毕
                 }
             });
             upload.render({
@@ -651,20 +623,22 @@
                 , multiple: true
                 , data: {type: '1'}
                 , size: 1024
-                , progress: function (e, percent) {
-                    var percent = percent;
-                    //将百分比显示到进度条
+                // , progress: function (e, percent) {
+                //     var percent = percent;
+                //     //将百分比显示到进度条
+                //     $('.layui-layer-shade').show();
+                //     $('.layui-layer-page').show();
+                //     $('.layui-bg-red').attr('lay-percent', percent + '%');
+                //     $('.layui-bg-red').width(percent + '%');
+                //     $('.layui-progress-text').text(percent + '%');
+                // }
+                , before: function () {
                     $('.layui-layer-shade').show();
                     $('.layui-layer-page').show();
-                    $('.layui-bg-red').attr('lay-percent', percent + '%');
-                    $('.layui-bg-red').width(percent + '%');
-                    $('.layui-progress-text').text(percent + '%');
-                }
-                , before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        //$('#show_img1').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" style="margin-left: 10px">');
-                    });
+                    $('.layui-bg-red').attr('lay-percent', 50 + '%');
+                    $('.layui-bg-red').width(50 + '%');
+                    $('.layui-progress-text').text();
+
                 }
                 , done: function (res) {
                     if (res.code == 200) {
@@ -682,19 +656,21 @@
                 , multiple: true
                 , data: {type: '1'}
                 , size: 1024
-                , progress: function (e, percent) {
-                    //将百分比显示到进度条
+                // , progress: function (e, percent) {
+                //     //将百分比显示到进度条
+                //     $('.layui-layer-shade').show();
+                //     $('.layui-layer-page').show();
+                //     $('.layui-bg-red').attr('lay-percent', percent + '%');
+                //     $('.layui-bg-red').width(percent + '%');
+                //     $('.layui-progress-text').text(percent + '%');
+                // }
+                , before: function () {
                     $('.layui-layer-shade').show();
                     $('.layui-layer-page').show();
-                    $('.layui-bg-red').attr('lay-percent', percent + '%');
-                    $('.layui-bg-red').width(percent + '%');
-                    $('.layui-progress-text').text(percent + '%');
-                }
-                , before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        //$('#show_img2').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" style="margin-left: 10px">');
-                    });
+                    $('.layui-bg-red').attr('lay-percent', 50 + '%');
+                    $('.layui-bg-red').width(50 + '%');
+                    $('.layui-progress-text').text();
+
                 }
                 , done: function (res) {
                     if (res.code == 200) {
@@ -705,69 +681,7 @@
                     }
                 }
             });
-            upload.render({
-                elem: '#imgs5'
-                , url: uploadUrl
-                , multiple: true
-                , data: {type: '1'}
-                , size: 1024
-                , progress: function (e, percent) {
-                    //将百分比显示到进度条
-                    $('.layui-layer-shade').show();
-                    $('.layui-layer-page').show();
-                    $('.layui-bg-red').attr('lay-percent', percent + '%');
-                    $('.layui-bg-red').width(percent + '%');
-                    $('.layui-progress-text').text(percent + '%');
-                }
-                , before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        //$('#show_img2').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" style="margin-left: 10px">');
-                    });
-                }
-                , done: function (res) {
-                    if (res.code == 200) {
-                        $('.layui-layer-shade').hide();
-                        $('.layui-layer-page').hide();
-                        $('#priview5').append('<li class="item_img"> <div class="operate"><i class="toleft layui-icon"><</i><i class="toright layui-icon">></i><i class="close layui-icon"><img style="height: 20px;width: 20px;" src="/static/admin/img/del.jpg"></i></div> <img src="' + res.url + '" class="img"><input type="hidden" name="course_imgs2[]" value="' + res.url + '"> </li>');
 
-                    }
-                }
-            });
-            //多视频上传
-            upload.render({
-                elem: '#video'
-                , url: videoUrl
-                , multiple: true
-                , accept: 'video'
-                , exts: 'mp4'
-                , data: {type: '2'}
-                , before: function (obj) {
-                    $('.layui-layer-shade').show();
-                    $('.layui-layer-page').show();
-                    $('.layui-bg-red').attr('lay-percent', 50 + '%');
-                    $('.layui-bg-red').width(50 + '%');
-                    $('.layui-progress-text').text();
-                    //预读本地文件示例，不支持ie8
-                    // obj.preview(function (index, file, result) {
-                    //     $('#show_video').append(' <video style="width: 200px;height: 150px;" controls="controls" type="video/mp4" preload="auto"> <source autostart="false" src="' + result + '" alt="' + file.name + '" class="layui-upload-img"</video>')
-                    // });
-                }
-                , done: function (res) {
-                    if (res.code == 200) {
-                        $('.layui-layer-shade').hide();
-                        $('.layui-layer-page').hide();
-                        $('#privideo').append('<li class="item_img" style="margin-top: 20px"><div class="operate"><i class="toleft layui-icon"><</i><i class="toright layui-icon">></i><i class="close layui-icon" style="margin-top: -25px"><img style="height: 20px;width: 30px;" src="/static/admin/img/del.jpg"></i></div><video style="width: 200px;height: 150px;margin-left: 20px" controls="controls" type="video/mp4" preload="auto"> <source autostart="false" src="' + res.url + '" class="layui-upload-img"></video><input type="hidden" name="videos[]" value="' + res.url + '"> </li>');
-
-                    }
-
-                    // $('.layui-bg-red').attr('lay-percent', '0%');
-                    // $('.layui-bg-red').width('0%');
-                    // $('.layui-progress-text').text('0%');
-                    // layer.msg('上传成功');
-                    //上传完毕
-                }
-            });
         });
 
 

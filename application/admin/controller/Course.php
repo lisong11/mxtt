@@ -49,6 +49,7 @@ class Course extends Common
     public function courseAdd()
     {
         cache::set('img_number', null);
+        cache::set('video_number', null);
         return $this->fetch();
     }
 
@@ -62,42 +63,53 @@ class Course extends Common
         $request = Request::instance();
         if ($request->isPost()) {
             $param = $request->param();
-            dump($param);
-            die;
             $relation_id = $this->create_no();
             $base_data['relation_id'] = $relation_id;
             $base_data['title'] = !empty($param['title']) ? $param['title'] : '';
             $base_data['detail'] = !empty($param['detail']) ? $param['detail'] : '';
             $hw_title = !empty($param['hw_title']) ? $param['hw_title'] : '';
             $hw_title1 = !empty($param['hw_title1']) ? $param['hw_title1'] : '';
-            $imgs_length = count($param)-5;
 
-//            $res = $this->CourseModel->allowField(true)->save($base_data);
-//            if (!$res) {
-//                $this->error("出现错误");
-//            }
+            $res = $this->CourseModel->allowField(true)->save($base_data);
+            if (!$res) {
+                $this->error("出现错误");
+            }
+            cache::set('sort', 0);
+            $cache = cache('sort');
+            if (empty($cache)) {
+                cache::set('sort', 1);
+            } else {
+                cache::inc('sort');
+            }
             if (!empty($param['course_imgs1'])) {
-                $img_data = array();
-                for($i=1;$i<=$imgs_length;$i++){
+                $img_number = cache('img_number');
+                $video_number = cache('video_number');
+                $plan_data = array();
+                $img_res = array();
+                $video_res = array();
+                for ($i = 1; $i <= $img_number; $i++) {
                     $img = array();
-                    $img['img_file_path'] = implode('&&', $param['course_imgs'."".$i]);
-                    $img['relation_id'] = $relation_id;
-                    $img['course_type'] = 1;
-                    $img['dir_level'] = $i;
-                    $img_data[$i] = $img;
+                    cache::inc('sort');
+                    $img['course_imgs'] = $param['course_imgs' . "" . $i];
+                    $img['dir_type'] = 'img';
+                    $img['sort'] = cache('sort');
+                    $img_res[] = $img;
                 }
-                $res = $this->CoursePlanModel->allowField(true)->saveAll($img_data);
-                dump($img_data);
-                die;
-//                $video_data = array();
-//                if (!empty($param['videos'])) {
-//                    $video_data['img_file_path'] = implode('&&', $param['videos']);
-//                    $video_data['relation_id'] = $relation_id;
-//                    $video_data['course_type'] = 2;
-//                }
-//                $plan_data[] = $img_data;
-//                $plan_data[] = $video_data;
-                $res = $this->CoursePlanModel->allowField(true)->saveAll($img_data);
+                for ($i = 1; $i <= $video_number; $i++) {
+                    cache::inc('sort');
+                    $img = array();
+                    $img['course_videos'] = $param['course_videos' . "" . $i];
+                    $img['dir_type'] = 'video';
+                    $img['sort'] = cache('sort');
+                    $video_res[] = $img;
+                }
+                cache::set('sort', null);
+                $img_file_path = array_merge_recursive($img_res, $video_res);
+
+                $plan_data['img_file_path'] = json_encode($img_file_path);
+                $plan_data['relation_id'] = $relation_id;
+                $plan_data['course_type'] = 1;
+                $res = $this->CoursePlanModel->allowField(true)->save($plan_data);
                 if (!$res) {
                     $this->error("出现错误");
                 }
@@ -140,22 +152,10 @@ class Course extends Common
     {
         $id = $this->request->get("course_id", "");
         $where['course_list.course_id'] = $id;
-        $CourseDetail = $this->CourseModel->getCourseDetail($where);
-        $info = array();
-        foreach ($CourseDetail['data'] as &$value) {
-
-            if ($value['course_type'] == 1) {
-                $info['plan_img'] = explode('&&', $value['img']);
-            }
-            if ($value['course_type'] == 2) {
-                $info['plan_video'] = explode('&&', $value['img']);
-            }
-            $info['course_id'] = $value['course_id'];
-            $info['title'] = $value['title'];
-            $info['detail'] = $value['detail'];
-            $info['create_tm'] = $value['create_tm'];
-        }
-
+        $info = $this->CourseModel->getCourseDetail($where);
+        $img = json_decode($info['img'], true);
+        $sortDetail = array_column($img, 'sort');
+        array_multisort($sortDetail, SORT_ASC, $img);
         //作业
         $homeWork = $this->CourseModel->homeWorkDetail($where);
 
@@ -171,47 +171,52 @@ class Course extends Common
             }
 
         }
+        $this->assign("img", $img);
         $this->assign("info", $info);
         return $this->fetch();
     }
 
-    public function sortDetail()
+    public function ajaxSort()
     {
-        $id = $this->request->get("course_id", "");
-        $where['course_list.course_id'] = $id;
-        $CourseDetail = $this->CourseModel->getCourseDetail($where);
-        $info = array();
-        foreach ($CourseDetail['data'] as &$value) {
+        $data = $this->request->param();
 
-            if ($value['course_type'] == 1) {
-                $info['plan_img'] = explode('&&', $value['img']);
+        $plan_id = $data['plan_id'];
+        $sort = $data['sort'];
+        if ($data['direct'] == 1) {
+            $new_sort = $sort - 1;
+            $img_file_path = db('course_plan')->where("plan_id='$plan_id'")->value('img_file_path');
+            $img = json_decode($img_file_path, true);
+            foreach ($img as &$value) {
+                switch ($value['sort']) {
+                    case "$sort":
+                        $value['sort'] = $new_sort;
+                        break;
+                    case "$new_sort":
+                        $value['sort'] = $new_sort + 1;
+                        break;
+                }
             }
-            if ($value['course_type'] == 2) {
-                $info['plan_video'] = explode('&&', $value['img']);
+        } elseif ($data['direct'] == 2) {
+            $new_sort = $sort + 1;
+            $img_file_path = db('course_plan')->where("plan_id='$plan_id'")->value('img_file_path');
+            $img = json_decode($img_file_path, true);
+            foreach ($img as &$value) {
+                switch ($value['sort']) {
+                    case "$sort":
+                        $value['sort'] = $new_sort;
+                        break;
+                    case "$new_sort":
+                        $value['sort'] = $new_sort - 1;
+                        break;
+                }
             }
-            $info['title'] = $value['title'];
-            $info['detail'] = $value['detail'];
-            $info['create_tm'] = $value['create_tm'];
-            $info['course_id'] = $value['course_id'];
         }
 
-        //作业
-        $homeWork = $this->CourseModel->homeWorkDetail($where);
-
-        foreach ($homeWork['data'] as &$value) {
-
-            if ($value['course_type'] == 1) {
-                $info['homework_img'] = explode('&&', $value['img']);
-                $info['b_title'] = $value['h_title'];
-            }
-            if ($value['course_type'] == 2) {
-                $info['homework_video'] = explode('&&', $value['img']);
-                $info['a_title'] = $value['h_title'];
-            }
-
-        }
-        $this->assign("info", $info);
-        return $this->fetch();
+        $update = json_encode($img);
+        db('course_plan')->where("plan_id='$plan_id'")->update(['img_file_path' => $update]);
+        return array(
+            "code" => 200
+        );
     }
 
     public function setDelete()
@@ -259,26 +264,51 @@ class Course extends Common
 
     public function ajaxGetVideo()
     {
-//        $cache = cache('video_number');
-//        if (empty($cache)) {
-//            cache::set('video_number', 1);
-//        } else {
-//            cache::inc('video_number');
-//        }
-//        $cache_key = cache('video_number');
-//        $data = 'video' . "" . $cache_key;
-//        $ul = 'privideo' . "" . $cache_key;
-//        $img = 'course_videos' . "" . $cache_key;
+        $cache = cache('video_number');
+        if (empty($cache)) {
+            cache::set('video_number', 1);
+        } else {
+            cache::inc('video_number');
+        }
+        $cache_key = cache('video_number');
+        $data = 'video' . "" . $cache_key;
+        $ul = 'privideo' . "" . $cache_key;
+        $video = 'course_videos' . "" . $cache_key;
         return array(
             "code" => 1,
-            "data" => 'video1',
-            "ul" => 'privideo1',
-            "img" => 'course_videos1'
+            "data" => $data,
+            "ul" => $ul,
+            "video" => $video
         );
     }
 
-    public function coursete()
+    public function permission()
     {
+        $cateId = $this->request->get("id", 0);
+        $this->assign("cateId", $cateId);
+        $course_ids = $this->CourseCateModel->where('id', $cateId)->value('course_ids');
+        $ids = explode(',',$course_ids);
+        $course_list = db('course_list')->field('course_id,title')->select();
+        foreach($course_list as &$value){
+            if(in_array($value['course_id'], $ids)){
+                $value['is_allow'] = 1;
+            }
+        }
+        $nodeList['0']['name'] = '课时名称';
+        $nodeList['0']['son'] = $course_list;
+
+        $this->assign('nodeList', $nodeList);
         return $this->fetch();
+    }
+
+    public function editPermissionDo()
+    {
+        $data = $this->request->param();
+        $save['course_ids'] = ltrim(implode(',', $data['nodeId']), ",");;
+        if (false === $this->CourseCateModel->isUpdate(true)->save($save, ['id' => $data['cateId']])) {
+            $this->_return('1003', '数据处理失败');
+        }
+
+        $this->redirect("/coursecate/catelist");
     }
 }

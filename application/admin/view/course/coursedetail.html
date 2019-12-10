@@ -1,7 +1,7 @@
 {include file="layout/header"}
 {include file="layout/navbar"}
 <style>
-    input{
+    input {
         border: none !important;
     }
 </style>
@@ -21,52 +21,74 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">课时名称：</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" value="{$info.title}" >
+                                    <input type="text" class="form-control" value="{$info.title}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">课时简介：</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" value="{$info.detail}" >
+                                    <input type="text" class="form-control" value="{$info.detail}">
                                 </div>
                             </div>
                             <div class="layui-form-item" style="border-bottom: 1px solid #eee;padding-left: 30px">
                                 <label class="layui-form-label" style="font-size: 16px;font-weight: bold">教案</label>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">图片：</label>
-                                <div class="col-md-6">
-                                    {volist name="info.plan_img" id="data"}
-                                    <img src="{$data}" width="300px" height="200px" style="margin-top:10px">
-                                    {/volist}
+                            <div id="oDivs">
+                                {volist name="img" id="vo"}
+                                <div class="form-group" id="sort_{$vo.sort}">
+                                    <button type="button" class="layui-btn addimg" value="1" style="margin-left:100px"
+                                            class="upmove" onclick="upmove({$vo.sort},{$info.plan_id},1)">
+                                        上移
+                                    </button>
+                                    <button type="button" class="layui-btn addimg" onclick="upmove({$vo.sort},{$info.plan_id},2)">
+                                        下移
+                                    </button>
+                                    <label class="col-md-2 control-label">文件夹：</label>
+                                    <div class="col-md-6">
+                                        {if $vo.dir_type== 'img'}
+                                        {volist name="vo['course_imgs']" id="data"}
+                                        <img src="{$data}" width="300px" height="200px" style="margin-top:10px">
+                                        {/volist}
+                                        {/if}
+                                        {if $vo.dir_type== 'video'}
+                                        {volist name="vo['course_videos']" id="data"}
+                                        <video width="450" height="350" controls="controls" type="video/mp4"
+                                               preload="auto">
+                                            <source src="{$data}" autostart="false">
+                                        </video>
+                                        {/volist}
+                                        {/if}
+                                    </div>
                                 </div>
+                                {/volist}
                             </div>
-                            <div class="form-group">
-                                <!--<a href="/Course/sortDetail?course_id={$info.course_id}" class="btn btn-xs btn-bg3">上移</a>-->
-                                <label class="col-md-2 control-label" style="margin-top:40px">视频：</label>
-                                <div class="col-md-6">
-                                    {volist name="info.plan_video" id="data"}
-                                    <video width="450" height="350" controls="controls" type="video/mp4" preload="auto">
-                                        <source src="{$data}" autostart="false">
-                                    </video>
-                                    {/volist}
-                                </div>
-                            </div>
+                            <!--{volist name="video" id="vo"}-->
                             <!--<div class="form-group">-->
-                                <!--<label class="col-md-2 control-label">视频：</label>-->
-                                <!--<div class="col-md-6">-->
-                                    <!--<video width="450" height="350" controls="controls" type="video/mp4" preload="auto">-->
-                                        <!--<source src="{$info.video_url}" autostart="false">-->
-                                    <!--</video>-->
-                                <!--</div>-->
+                            <!--<label class="col-md-2 control-label" style="margin-top:40px">文件夹：</label>-->
+                            <!--<div class="col-md-6">-->
+                            <!--{volist name="vo['course_videos']" id="data"}-->
+                            <!--<video width="450" height="350" controls="controls" type="video/mp4" preload="auto">-->
+                            <!--<source src="{$data}" autostart="false">-->
+                            <!--</video>-->
+                            <!--{/volist}-->
                             <!--</div>-->
-                           <div class="layui-form-item" style="border-bottom: 1px solid #eee;padding-left: 30px">
+                            <!--</div>-->
+                            <!--{/volist}-->
+                            <!--<div class="form-group">-->
+                            <!--<label class="col-md-2 control-label">视频：</label>-->
+                            <!--<div class="col-md-6">-->
+                            <!--<video width="450" height="350" controls="controls" type="video/mp4" preload="auto">-->
+                            <!--<source src="{$info.video_url}" autostart="false">-->
+                            <!--</video>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="layui-form-item" style="border-bottom: 1px solid #eee;padding-left: 30px">
                                 <label class="layui-form-label" style="font-size: 16px;font-weight: bold;width: 120px;">课前预习</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">课时简介：</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" value="{$info.b_title}" >
+                                    <input type="text" class="form-control" value="{$info.b_title}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -83,7 +105,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">课时简介：</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" value="{$info.a_title}" >
+                                    <input type="text" class="form-control" value="{$info.a_title}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -119,9 +141,31 @@
     <i class="pci-chevron chevron-up"></i>
 </button>
 </div>
-<!-- END OF CONTAINER -->
-</body>
 <script>
+    function upmove(sort, plan_id ,direct) {
+
+        $.ajax({
+            url: 'ajaxSort',
+            type: 'post',
+            data: {plan_id: plan_id, sort: sort,direct:direct},
+            dataType: 'json',
+            async: false,
+            success: function (returnData) {
+                if (returnData.code == 200) {
+                    location = location;
+                }
+
+            }
+        });
+    }
+
+    // //添加图片
+    // $("body").on("click", ".form-group .upmove", function () {
+    //     alert(1111);
+    // });
 
 </script>
+<!-- END OF CONTAINER -->
+</body>
+
 </html>

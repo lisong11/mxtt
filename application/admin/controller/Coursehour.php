@@ -74,4 +74,35 @@ class Coursehour extends Common
             )
         );
     }
+
+    public function permission()
+    {
+        $cateId = $this->request->get("id", 0);
+        $this->assign("cateId", $cateId);
+        $course_ids = $this->CourseCateModel->where('id', $cateId)->value('course_ids');
+        $ids = explode(',',$course_ids);
+        $course_list = db('course_hour')->field('course_id,title')->select();
+        foreach($course_list as &$value){
+            if(in_array($value['course_id'], $ids)){
+                $value['is_allow'] = 1;
+            }
+        }
+        $nodeList['0']['name'] = '课程名称';
+        $nodeList['0']['son'] = $course_list;
+
+        $this->assign('nodeList', $nodeList);
+        return $this->fetch();
+    }
+
+    public function editPermissionDo()
+    {
+        $data = $this->request->param();
+        $save['course_ids'] = ltrim(implode(',', $data['nodeId']), ",");
+        if (false === $this->CourseCateModel->isUpdate(true)->save($save, ['id' => $data['cateId']])) {
+            $this->_return('1003', '数据处理失败');
+        }
+
+        $this->redirect("/coursecate/clist");
+    }
+
 }

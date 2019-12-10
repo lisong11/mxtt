@@ -1,0 +1,146 @@
+{include file="layout/header"}
+{include file="layout/navbar"}
+<!--END NAVBAR-->
+<div class="boxed">
+    <!--CONTENT CONTAINER-->
+    <div id="content-container">
+        <!--End breadcrumb-->
+        <!--Page content-->
+        <div id="page-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        {include file="layout/bread"}
+                        <!-- BASIC FORM ELEMENTS -->
+                        <style type="text/css">
+                            .layui-form-label {
+                                width: 200px;
+                            }
+
+                            .layui-form-select {
+                                margin-left: 202px;
+                                width: 45%;
+                            }
+
+                            .layui-form-select .layui-input {
+                                width: 100% !important;
+                                margin-left: -3px;
+                            }
+
+                            .layui-input {
+                                width: 50% !important;
+                            }
+
+                            .date-input {
+                                width: 20% !important;
+                            }
+
+                            .layui-layedit {
+                                width: 70%;
+                                margin-left: 90px;
+                            }
+
+                            .sub-button {
+                                margin-left: 300px;
+                            }
+                        </style>
+                        <form method="post" action="docAdd" id="add_form" class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">接口名称：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" placeholder="请输入接口名称" autocomplete="off"
+                                           class="layui-input" lay-verify="title">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">接口地址：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="address" placeholder="请输入接口地址" autocomplete="off"
+                                           class="layui-input" lay-verify="address">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">接口作者：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="author" placeholder="请输入接口作者" autocomplete="off"
+                                           class="layui-input" lay-verify="author">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">接口参数：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="接口参数之间用||分割，参数与类型之间用&&分割，例如：token&&string||phone&&int"
+                                              style="width: 50%;" name="param"
+                                              class="layui-textarea" lay-verify="param"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block sub-button">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End page content-->
+    </div>
+    <!--END CONTENT CONTAINER-->
+    <!--ASIDE-->
+    <!--END ASIDE-->
+    <!--MAIN NAVIGATION-->
+    {include file="layout/menu"}
+    <!--END MAIN NAVIGATION-->
+</div>
+<!-- FOOTER -->
+{include file="layout/footer"}
+<!-- END FOOTER -->
+<!-- SCROLL PAGE BUTTON -->
+<button class="scroll-top btn">
+    <i class="pci-chevron chevron-up"></i>
+</button>
+</div>
+<!-- END OF CONTAINER -->
+</body>
+</html>
+<script src="/static/admin/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'laydate', 'upload', 'layedit'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var layedit = layui.layedit;
+
+
+        form.verify({
+            title: function (value, item) {
+                if (value == '') {
+                    return '名称不能为空';
+                }
+            },
+            address: function (value, item) {
+                if (value == '') {
+                    return '地址不能为空';
+                }
+            },
+            author: function (value, item) {
+                if (value == '') {
+                    return '作者不能为空';
+                }
+            },
+            param: function (value, item) {
+                if (value == '') {
+                    return '接口参数不能为空';
+                }
+            },
+        });
+
+    });
+    CKEDITOR.replace('rich_text');
+
+
+</script>

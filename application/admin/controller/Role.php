@@ -80,7 +80,6 @@ class Role extends Common
 
         $this->assign("roleId", $roleId);
         $nodeList = $this->NodeListModel->getAllRoleTreeNodeList($roleId);
-
         $this->assign("nodeList", $nodeList);
         $roleInfo = $this->RoleListModel->get($roleId);
 

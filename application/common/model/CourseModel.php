@@ -45,15 +45,14 @@ class CourseModel extends BaseModel
             "course_list.title",
             "course_list.detail",
             "course_list.create_tm",
+            "course_plan.plan_id",
             "course_plan.img_file_path as img",
-            "course_plan.course_type",
         );
         return $this
             ->field($field)
             ->where($where)
             ->join('course_plan', 'course_plan.relation_id=course_list.relation_id', 'left')
-            ->order("course_list.course_id desc")
-            ->paginate($pageSize)
+            ->find()
             ->toArray();
 
 

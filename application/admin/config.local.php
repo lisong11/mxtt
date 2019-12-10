@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    "IMG_UPLOAD_PATH" => "/Users/liupan/works/media/",
-    "IMG_READ_PATH" => "http://media.panpan.com/",
-    'LOG_DIR'=>'/Users/liupan/works/logs/admin_tutuya/',
+    "IMG_UPLOAD_PATH" =>ROOT_PATH . 'public' . DS . 'uploads/',
+    "IMG_READ_PATH" => 'http://127.0.0.1/uploads/',
+    'LOG_DIR'=>'/www/log/admin/'
 );

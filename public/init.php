@@ -6,4 +6,5 @@
  * Time: 下午3:33
  */
 define('FILE_CONFIG','test');
-define('RUNTIME_PATH',   '/Users/liupan/works/logs/runtime/admin_tutuya/');
+define('CACHE_PATH','/www/wwwroot/tp5/runtime/cache/');
+define('RUNTIME_PATH','/www/wwwroot/tp5/runtime/cache/');
